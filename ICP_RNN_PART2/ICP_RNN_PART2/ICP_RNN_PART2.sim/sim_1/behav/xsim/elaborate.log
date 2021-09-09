@@ -1,0 +1,78 @@
+Vivado Simulator 2020.1
+Copyright 1986-1999, 2001-2020 Xilinx, Inc. All Rights Reserved.
+Running: D:/vivado/Vivado/2020.1/bin/unwrapped/win64.o/xelab.exe -wto b35d20869487418cb453ecc512fff7d7 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L secureip --snapshot tb_RNN_behav xil_defaultlib.tb_RNN -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+WARNING: [VRFC 10-4940] 'st_sphs_9600x64m16' remains a black box since it has no binding entity [C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/Mem9600x64.vhd:48]
+WARNING: [VRFC 10-4940] 'st_sphdl_128x32m8_l' remains a black box since it has no binding entity [C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/Mem128x32.vhd:48]
+WARNING: [VRFC 10-4940] 'st_sphs_48x64m4_l' remains a black box since it has no binding entity [C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/Mem48x64.vhd:48]
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling package std.standard
+Compiling package std.textio
+Compiling package ieee.std_logic_1164
+Compiling package ieee.numeric_std
+Compiling package ieee.std_logic_arith
+Compiling package ieee.std_logic_unsigned
+Compiling package ieee.std_logic_textio
+Compiling package ieee.math_real
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.input_gen [\input_gen(file_name="/h/d9/h/ha...]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=14)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=7)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=6)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=15)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=8)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=64)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=32)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [ff_default]
+Compiling architecture rtl of entity xil_defaultlib.Mem9600x64 [mem9600x64_default]
+Compiling architecture rtl of entity xil_defaultlib.Mem128x32 [mem128x32_default]
+Compiling architecture rtl of entity xil_defaultlib.Mem48x64 [mem48x64_default]
+Compiling architecture behavioral of entity xil_defaultlib.Mem_initial [mem_initial_default]
+Compiling architecture behavioral of entity xil_defaultlib.GRU_select [gru_select_default]
+Compiling architecture behavioral of entity xil_defaultlib.counter_gate [counter_gate_default]
+Compiling architecture behavioral of entity xil_defaultlib.counter [counter_default]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=5)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=13)\]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=4)\]
+Compiling architecture behavioral of entity xil_defaultlib.input_controller [input_controller_default]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=16)\]
+Compiling architecture behavioral of entity xil_defaultlib.h_prev_buffer [h_prev_buffer_default]
+Compiling architecture behavioral of entity xil_defaultlib.input_buffer [input_buffer_default]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=24)\]
+Compiling architecture behavioral of entity xil_defaultlib.r_u_controller [r_u_controller_default]
+Compiling architecture behavioral of entity xil_defaultlib.memory_cell_controller [memory_cell_controller_default]
+Compiling architecture behavioral of entity xil_defaultlib.sigmoid [sigmoid_default]
+Compiling architecture behavioral of entity xil_defaultlib.tanh_h_t [tanh_h_t_default]
+Compiling architecture behavioral of entity xil_defaultlib.output_stage [output_stage_default]
+Compiling architecture behavioral of entity xil_defaultlib.write_file [\write_file(file_name="/h/d9/h/h...]
+Compiling architecture behavioral of entity xil_defaultlib.write_file [\write_file(file_name="/h/d9/h/h...]
+Compiling architecture behavioral of entity xil_defaultlib.GRU_layer [gru_layer_default]
+Compiling architecture behavioral of entity xil_defaultlib.counter_gate [\counter_gate(input_size=128,siz...]
+Compiling architecture behavioral of entity xil_defaultlib.counter [\counter(input_size=128,size_hor...]
+Compiling architecture behavioral of entity xil_defaultlib.h_prev_buffer [\h_prev_buffer(input_size=128,si...]
+Compiling architecture behavioral of entity xil_defaultlib.FF [\FF(n=12)\]
+Compiling architecture behavioral of entity xil_defaultlib.input_controller [\input_controller(input_number_w...]
+Compiling architecture behavioral of entity xil_defaultlib.fc_counter [fc_counter_default]
+Compiling architecture behavioral of entity xil_defaultlib.fully_connected [fully_connected_default]
+Compiling architecture behavioral of entity xil_defaultlib.sigmoid_fc [sigmoid_fc_default]
+Compiling architecture behavioral of entity xil_defaultlib.write_file [\write_file(file_name="/h/d9/h/h...]
+Compiling architecture behavioral of entity xil_defaultlib.write_file [\write_file(file_name="/h/d9/h/h...]
+Compiling architecture behavioral of entity xil_defaultlib.TOP_RNN [top_rnn_default]
+Compiling architecture behavioral of entity xil_defaultlib.tb_rnn
+Built simulation snapshot tb_RNN_behav

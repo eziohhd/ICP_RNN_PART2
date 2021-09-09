@@ -1,0 +1,28 @@
+0.7
+2020.1
+May 27 2020
+20:09:33
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/FF.vhd,1631182532,vhdl,,,,ff,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/GRU_layer.vhd,1631182532,vhdl,,,,gru_layer,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/GRU_sel.vhd,1631182532,vhdl,,,,gru_select,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/Mem128x32.vhd,1631182532,vhdl,,,,mem128x32,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/Mem48x64.vhd,1631182532,vhdl,,,,mem48x64,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/Mem9600x64.vhd,1631182532,vhdl,,,,mem9600x64,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/Mem_initial.vhd,1631182532,vhdl,,,,mem_initial,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/TOP_RNN.vhd,1631197484,vhdl,,,,top_rnn,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/counter.vhd,1631182532,vhdl,,,,counter,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/counter_gate.vhd,1631182532,vhdl,,,,counter_gate,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/fc_counter.vhd,1631182532,vhdl,,,,fc_counter,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/fully_connected.vhd,1631182532,vhdl,,,,fully_connected,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/hprev_buffer.vhd,1631182532,vhdl,,,,h_prev_buffer,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/input_buffer.vhd,1631182532,vhdl,,,,input_buffer,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/input_controller.vhd,1631182532,vhdl,,,,input_controller,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/input_gen.vhd,1631182532,vhdl,,,,input_gen,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/memory_cell_controller.vhd,1631182532,vhdl,,,,memory_cell_controller,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/output_stage.vhd,1631182532,vhdl,,,,output_stage,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/r_u_controller.vhd,1631182532,vhdl,,,,r_u_controller,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/sigmoid.vhd,1631182532,vhdl,,,,sigmoid,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/sigmoid_fc.vhd,1631182532,vhdl,,,,sigmoid_fc,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/tanh_h_t.vhd,1631182532,vhdl,,,,tanh_h_t,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/tb_RNN.vhd,1631182532,vhdl,,,,tb_rnn,,,,,,,,
+C:/Users/Nitro 5/Desktop/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2/ICP_RNN_PART2.sim/write_file.vhd,1631182532,vhdl,,,,write_file,,,,,,,,
