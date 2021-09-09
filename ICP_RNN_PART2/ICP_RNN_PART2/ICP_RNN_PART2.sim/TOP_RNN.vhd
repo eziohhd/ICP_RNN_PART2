@@ -293,7 +293,6 @@ component write_file is
 constant MED_WL          :integer:=24;
 constant MED_FL          :integer:=13;
 constant FC_WL           :integer:=24;
-signal start_gru1        :std_logic;
 signal GRU_en            : std_logic;
 signal input_done_g        : std_logic;                   
 signal h_prev_done_g      : std_logic;                   
@@ -437,7 +436,7 @@ begin
      addr_input_gru2 <= "000"&addr_input_temp_gru2;
      addr_w_u_gru2 <= '0' & addr_w_u_temp_gru2;
      
-  start_ib<=starti or start_gru2;  
+  start_ib<=start or start_gru2;  
   input_done_g  <=  input_done_g_gru1 when GRU_sel='0' else
                     input_done_g_gru2; 
   h_prev_done_g <=  h_prev_done_g_gru1 when GRU_sel='0' else
