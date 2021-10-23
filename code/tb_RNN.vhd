@@ -120,7 +120,7 @@ begin
 --bitstream----------------------------------------------------------------
 input_Wu: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/Wu_binary_new.txt" ,
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\Wu_binary_new.txt" ,
     INPUT_WIDTH => 16
     )
 Port map(
@@ -132,7 +132,7 @@ Port map(
 
 input_Wr: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/Wr_binary_new.txt" ,
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\Wr_binary_new.txt" ,
     INPUT_WIDTH => 16
     )
 Port map(
@@ -143,7 +143,7 @@ Port map(
     );
 input_Wc: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/Wc_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\Wc_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -155,7 +155,7 @@ Port map(
 
 input_xt: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/xt_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\xt_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -166,7 +166,7 @@ Port map(
     );
 input_hprev: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/h175_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\h175_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -177,7 +177,7 @@ Port map(
     );
 input_Bu_Br: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/BuBr_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\BuBr_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -188,7 +188,7 @@ Port map(
     );
 input_Bc: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/Bc_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\Bc_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -199,7 +199,7 @@ Port map(
     );
 input_gru2_Wu: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/GRU2_Wu_binary_new.txt" ,
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_Wu_binary_new.txt" ,
     INPUT_WIDTH => 16
     )
 Port map(
@@ -211,7 +211,7 @@ Port map(
 
 input_gru2_Wr: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/GRU2_Wr_binary_new.txt" ,
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_Wr_binary_new.txt" ,
     INPUT_WIDTH => 16
     )
 Port map(
@@ -222,7 +222,7 @@ Port map(
     );
 input_gru2_Wc: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/GRU2_Wc_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_Wc_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -233,7 +233,7 @@ Port map(
     );  
 input_gru2_BuBr: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/GRU2_BuBr_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_BuBr_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -244,7 +244,7 @@ Port map(
     );
 input_gru2_Bc: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/GRU2_Bc_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_Bc_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -255,7 +255,7 @@ Port map(
     );
 input_gru2_hprev: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/GRU2_h_prev_binary_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_h_prev_binary_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(
@@ -266,7 +266,7 @@ Port map(
     );
 input_fc_weights: input_gen 
 generic map(
-    FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/fc_weights_new.txt",
+    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\fc_weights_new.txt",
     INPUT_WIDTH => 16
     )
 Port map(

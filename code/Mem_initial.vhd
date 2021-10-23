@@ -221,40 +221,61 @@ signal addr_fc_n,addr_fc       : std_logic_vector(6 downto 0);
 signal addr_fc_mem             : std_logic_vector(6 downto 0);
 signal counter_fc              : std_logic_vector(6 downto 0);
 signal counter_fc_next         : std_logic_vector(6 downto 0);
+
+--------------------------------signals for delay(add one clock cycle latency to dist mem)
+signal   weight_u1_out_delay     : std_logic_vector(31 downto 0);
+signal   weight_u2_out_delay     : std_logic_vector(31 downto 0);
+signal   weight_r1_out_delay     : std_logic_vector(31 downto 0);
+signal   weight_r2_out_delay     : std_logic_vector(31 downto 0);
+signal   weight_c1_out_delay     : std_logic_vector(31 downto 0);
+signal   weight_c2_out_delay     : std_logic_vector(31 downto 0);
+signal   xt1_delay        : std_logic_vector(63 downto 0);
+signal   xt2_delay        : std_logic_vector(63 downto 0);
+signal   ht1_delay        : std_logic_vector(63 downto 0);
+signal   ht2_delay        : std_logic_vector(63 downto 0);
+signal   hprev1_delay        : std_logic_vector(63 downto 0);
+signal   hprev2_delay        : std_logic_vector(63 downto 0);
+signal   fc_weights_out_delay    : std_logic_vector(31 downto 0);
+signal   bias_out_delay          : std_logic_vector(31 downto 0);
+
 begin
 ---------------------ht_store------------------------------------------------
 wen_ht1_n(0) <= wen_ht1;            
 wen_ht2_n(0) <= wen_ht2;
 wen_fc_n(0) <= wen_fc;            
 ---------------combinational_logic_out-------------------------------------------
-weight_u1_out <= weight_u1;
-weight_u2_out <= weight_u2;
-weight_r1_out <= weight_r1;
-weight_r2_out <= weight_r2;
-weight_c1_out <= weight_c1;
-weight_c2_out <= weight_c2;
-input1_out    <= xt1(63 downto 32) when xt_state = '1' else
-                 hprev1(63 downto 32) when hprev_state = '1' else
-                 ht1(56 downto 48)&"0000000"&ht1(40 downto 32)&"0000000" when xt_state_gru2 = '1' else
-                 hprev1(63 downto 32) when hprev_state_gru2 = '1' else
-                 (others => '0');   
-input2_out    <= xt1(31 downto 0) when xt_state = '1' else
-                 hprev1(31 downto 0) when hprev_state = '1' else
-                 ht1(24 downto 16)&"0000000"&ht1(8 downto 0)&"0000000" when xt_state_gru2 = '1' else
-                 hprev1(31 downto 0) when hprev_state_gru2 = '1' else
-                 (others => '0');  
-input3_out    <= xt2(63 downto 32) when xt_state = '1' else
-                 hprev2(63 downto 32) when hprev_state = '1' else
-                 ht2(56 downto 48)&"0000000"&ht2(40 downto 32)&"0000000" when xt_state_gru2 = '1' else
-                 hprev2(63 downto 32) when hprev_state_gru2 = '1' else
-                 (others => '0');  
-input4_out    <= xt2(31 downto 0) when xt_state = '1' else
-                 hprev2(31 downto 0) when hprev_state = '1' else
-                 ht2(24 downto 16)&"0000000"&ht2(8 downto 0)&"0000000" when xt_state_gru2 = '1' else
-                 hprev2(31 downto 0) when hprev_state_gru2 = '1' else
-                 (others => '0');   
-bias_out      <= bias_bubr(31 downto 16) & bias_bc(31 downto 16); 
-fc_weights_out <= fc_weights;
+weight_u1_out_delay <= weight_u1;
+weight_u2_out_delay <= weight_u2;
+weight_r1_out_delay <= weight_r1;
+weight_r2_out_delay <= weight_r2;
+weight_c1_out_delay <= weight_c1;
+weight_c2_out_delay <= weight_c2;
+input1_out    <= xt1_delay(63 downto 32) when xt_state = '1' else
+                 hprev1_delay(63 downto 32) when hprev_state = '1' else
+                 ht1_delay(56 downto 48)&"0000000"&ht1_delay(40 downto 32)&"0000000" when xt_state_gru2 = '1' else
+                 hprev1_delay(63 downto 32) when hprev_state_gru2 = '1' else
+                 xt1_delay(63 downto 32);
+                -- (others => '0');   
+input2_out    <= xt1_delay(31 downto 0) when xt_state = '1' else
+                 hprev1_delay(31 downto 0) when hprev_state = '1' else
+                 ht1_delay(24 downto 16)&"0000000"&ht1_delay(8 downto 0)&"0000000" when xt_state_gru2 = '1' else
+                 hprev1_delay(31 downto 0) when hprev_state_gru2 = '1' else
+                 xt1_delay(31 downto 0);
+                 --(others => '0');  
+input3_out    <= xt2_delay(63 downto 32) when xt_state = '1' else
+                 hprev2_delay(63 downto 32) when hprev_state = '1' else
+                 ht2_delay(56 downto 48)&"0000000"&ht2_delay(40 downto 32)&"0000000" when xt_state_gru2 = '1' else
+                 hprev2_delay(63 downto 32) when hprev_state_gru2 = '1' else
+                 xt2(63 downto 32);
+                 --(others => '0');  
+input4_out   <= xt2_delay(31 downto 0) when xt_state = '1' else
+                 hprev2_delay(31 downto 0) when hprev_state = '1' else
+                 ht2_delay(24 downto 16)&"0000000"&ht2_delay(8 downto 0)&"0000000" when xt_state_gru2 = '1' else
+                 hprev2_delay(31 downto 0) when hprev_state_gru2 = '1' else
+                 xt2_delay(31 downto 0);
+                 --(others => '0');   
+bias_out_delay      <= bias_bubr(31 downto 16) & bias_bc(31 downto 16); 
+fc_weights_out_delay <= fc_weights;
 --------------------addresses------------------------------------------------
 addr_weights_mem  <= addr_weights when loading ='0'and loading_gru2 = '0' else 
                     '0'&addr_w_u_in when loading = '1' and loading_gru2 = '0' else
@@ -304,9 +325,10 @@ sequential:process(clk,reset)
             if reset='1' then
                 current_state<=idle;
                 c_state <= idle_ht;
+                
             else 
                 current_state<=next_state;
-                c_state <= n_state;
+                c_state <= n_state; 
             end if;
         end if;
 end process;  
@@ -994,5 +1016,119 @@ port map(
      DataxDI =>  bitstream_fc,
      DataxDO =>  fc_weights
     );
+    
+---------------------------delay ff-------------------------------------------
+weight_u1_out_delay_ff : FF
+    generic map(N => 32)
+    port map(
+          D  => weight_u1_out_delay,       
+          Q  => weight_u1_out,
+          clk => clk,
+          reset => reset
+          );
+weight_u2_out_delay_ff : FF
+    generic map(N => 32)
+    port map(
+          D  => weight_u2_out_delay,       
+          Q  => weight_u2_out,
+          clk => clk,
+          reset => reset
+          );
+weight_r1_out_delay_ff : FF
+    generic map(N => 32)
+    port map(
+          D  => weight_r1_out_delay,       
+          Q  => weight_r1_out,
+          clk => clk,
+          reset => reset
+          );  
+weight_r2_out_delay_ff : FF
+    generic map(N => 32)
+    port map(
+          D  => weight_r2_out_delay,       
+          Q  => weight_r2_out,
+          clk => clk,
+          reset => reset
+          );
+weight_c1_out_delay_ff : FF
+    generic map(N => 32)
+    port map(
+          D  => weight_c1_out_delay,       
+          Q  => weight_c1_out,
+          clk => clk,
+          reset => reset
+          );          
+weight_c2_out_delay_ff : FF
+    generic map(N => 32)
+    port map(
+          D  => weight_c2_out_delay,       
+          Q  => weight_c2_out,
+          clk => clk,
+          reset => reset
+          );  
 
+xt1_delay_ff : FF
+    generic map(N => 64)
+    port map(
+          D  => xt1,       
+          Q  => xt1_delay,
+          clk => clk,
+          reset => reset
+          );      
+xt2_delay_ff : FF
+    generic map(N => 64)
+    port map(
+          D  => xt2,       
+          Q  => xt2_delay,
+          clk => clk,
+          reset => reset
+          );    
+ht1_delay_ff : FF
+    generic map(N => 64)
+    port map(
+          D  => ht1,       
+          Q  => ht1_delay,
+          clk => clk,
+          reset => reset
+          );
+ht2_delay_ff : FF
+    generic map(N => 64)
+    port map(
+          D  => ht2,       
+          Q  => ht2_delay,
+          clk => clk,
+          reset => reset
+          );
+hprev1_delay_ff : FF
+    generic map(N => 64)
+    port map(
+          D  => hprev1,       
+          Q  => hprev1_delay,
+          clk => clk,
+          reset => reset
+          );
+hprev2_delay_ff : FF
+    generic map(N => 64)
+    port map(
+          D  => hprev2,       
+          Q  => hprev2_delay,
+          clk => clk,
+          reset => reset
+          );
+fc_weights_out_delay_ff : FF
+    generic map(N => 32)
+    port map(
+          D  => fc_weights_out_delay,       
+          Q  => fc_weights_out,
+          clk => clk,
+          reset => reset
+          ); 
+bias_out_delay_ff : FF
+    generic map(N => 32)
+    port map(
+          D  => bias_out_delay,       
+          Q  => bias_out,
+          clk => clk,
+          reset => reset
+          );        
 end Behavioral;

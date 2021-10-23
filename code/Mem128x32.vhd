@@ -23,39 +23,68 @@ end Mem128x32;
 
 architecture rtl of Mem128x32 is
   
-  component ST_SPHDL_128x32m8_L
-    port (
-      Q       : out std_logic_vector (31 downto 0);
-      RY      : out std_logic;
-      CK      : in  std_logic;
-      CSN     : in  std_logic;
-      TBYPASS : in  std_logic;
-      WEN     : in  std_logic;
-      A       : in  std_logic_vector (6 downto 0);
-      D       : in  std_logic_vector (31 downto 0)
-      );
-  end component;
+--  component ST_SPHDL_128x32m8_L
+--    port (
+--      Q       : out std_logic_vector (31 downto 0);
+--      RY      : out std_logic;
+--      CK      : in  std_logic;
+--      CSN     : in  std_logic;
+--      TBYPASS : in  std_logic;
+--      WEN     : in  std_logic;
+--      A       : in  std_logic_vector (6 downto 0);
+--      D       : in  std_logic_vector (31 downto 0)
+--      );
+--  end component;
+--  component blk_mem_gen_1 is
+--  PORT (
+--    clka : IN STD_LOGIC;
+--    ena : IN STD_LOGIC;
+--    wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+--    addra : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
+--    dina : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+--    douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+--  );
+--end component;
+component dist_mem_gen_1 is
+  PORT (
+    a : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
+    d : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    clk : IN STD_LOGIC;
+    we : IN STD_LOGIC;
+    spo : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+  );
+end component;
 
   signal LOW  : std_logic;
   signal HIGH : std_logic;
+  signal csn  : std_logic;
+  signal wen  : std_logic;
 
 begin
 
   LOW  <= '0';
   HIGH <= '1';
+  csn <= not CSxSI;
+  wen <= not WExSI;
 
 -- mem2011
-  DUT_ST_SPHDL_128x32_mem2010 : ST_SPHDL_128x32m8_L
-    port map(
-      Q       => DataxDO,
-      RY      => RYxSO,
-      CK      => ClkxCI,
-      CSN     => CSxSI,
-      TBYPASS => LOW,
-      WEN     => WExSI,
-      A       => AddrxDI,
-      D       => DataxDI
-      );
+--  DUT_ST_SPHDL_128x32_mem2010 : blk_mem_gen_1
+--    port map(
+--        clka => ClkxCI,
+--        ena  => csn,
+--        wea  => wen,
+--        addra => AddrxDI,
+--        dina  => DataxDI,
+--        douta => DataxDO  
+--        );
+    DUT_ST_SPHDL_128x32_mem2010 : dist_mem_gen_1
+    port map(  
+        a   => AddrxDI,
+        d   => DataxDI,
+        clk => ClkxCI,
+        we  => wen,
+        spo => DataxDO   
+    );
 
 end rtl;
 

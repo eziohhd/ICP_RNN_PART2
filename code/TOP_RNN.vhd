@@ -736,7 +736,7 @@ dut15: sigmoid_fc
 
 dut16:write_file
  generic map(
-        FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/h_t.txt",
+        FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\h_t.txt",
         INPUT_WIDTH=> 16
         )
     Port map(
@@ -749,7 +749,7 @@ dut16:write_file
 
 dut17:write_file
  generic map(
-        FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/h_prev.txt",
+        FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\h_prev.txt",
         INPUT_WIDTH=> 16
         )
     Port map(

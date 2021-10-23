@@ -264,7 +264,7 @@ dut66:r_u_controller
 
 dut101:write_file
  generic map(
-        FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/u_t.txt",
+        FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\u_t.txt",
         INPUT_WIDTH=> 16
         )
     Port map(
@@ -277,7 +277,7 @@ dut101:write_file
 
 dut102:write_file
  generic map(
-        FILE_NAME => "/h/d9/h/ha3077hu-s/Desktop/ICP_RNN/binary_files/r_t.txt",
+        FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\r_t.txt",
         INPUT_WIDTH=> 16
         )
     Port map(
