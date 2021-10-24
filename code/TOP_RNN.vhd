@@ -37,18 +37,18 @@ end TOP_RNN;
 
 architecture Behavioral of TOP_RNN is
 --component------------------------------------------------------
-component CPAD_S_74x50u_IN            --input PAD
+--component CPAD_S_74x50u_IN            --input PAD
 
-    port (
-      COREIO : out std_logic;
-      PADIO  : in  std_logic);
-  end component;
+--    port (
+--      COREIO : out std_logic;
+--      PADIO  : in  std_logic);
+--  end component;
 
-  component CPAD_S_74x50u_OUT           --output PAD
-    port (
-      COREIO : in  std_logic;
-      PADIO  : out std_logic);
-  end component;
+--  component CPAD_S_74x50u_OUT           --output PAD
+--    port (
+--      COREIO : in  std_logic;
+--      PADIO  : out std_logic);
+--  end component;
 
 component Mem_initial is
     Port (
@@ -420,25 +420,25 @@ signal start_ib                : std_logic;
 signal GRU_en_gru1            : std_logic;
 signal r_u_valid_gru1         : std_logic;  
 ----signals for pads---------------------------------------------------------------------
-signal clki,reseti                   : std_logic;  
-signal starti                        : std_logic;  
-signal initiali                      : std_logic; 
-signal data_ini                      : std_logic_vector(15 downto 0);
-signal data_outi                     : std_logic_vector(15 downto 0);
-signal input_write_en_wui            : std_logic;  
-signal input_write_en_wri            : std_logic;  
-signal input_write_en_wci            : std_logic;  
-signal input_write_en_bubri          : std_logic;  
-signal input_write_en_bci            : std_logic;  
-signal input_write_en_xti            : std_logic;  
-signal input_write_en_hprevi         : std_logic;  
-signal input_write_en_gru2_wui       : std_logic;  
-signal input_write_en_gru2_wri       : std_logic;  
-signal input_write_en_gru2_wci       : std_logic;  
-signal input_write_en_gru2_bubri     : std_logic;  
-signal input_write_en_gru2_bci       : std_logic;  
-signal input_write_en_gru2_hprevi    : std_logic; 
-signal input_write_en_fc_weightsi    : std_logic;
+--signal clki,reseti                   : std_logic;  
+--signal starti                        : std_logic;  
+--signal initiali                      : std_logic; 
+--signal data_ini                      : std_logic_vector(15 downto 0);
+--signal data_outi                     : std_logic_vector(15 downto 0);
+--signal input_write_en_wui            : std_logic;  
+--signal input_write_en_wri            : std_logic;  
+--signal input_write_en_wci            : std_logic;  
+--signal input_write_en_bubri          : std_logic;  
+--signal input_write_en_bci            : std_logic;  
+--signal input_write_en_xti            : std_logic;  
+--signal input_write_en_hprevi         : std_logic;  
+--signal input_write_en_gru2_wui       : std_logic;  
+--signal input_write_en_gru2_wri       : std_logic;  
+--signal input_write_en_gru2_wci       : std_logic;  
+--signal input_write_en_gru2_bubri     : std_logic;  
+--signal input_write_en_gru2_bci       : std_logic;  
+--signal input_write_en_gru2_hprevi    : std_logic; 
+--signal input_write_en_fc_weightsi    : std_logic;
 
 signal end_sim : std_logic:='0';
 begin
@@ -449,7 +449,7 @@ begin
      addr_input_gru2 <= "000"&addr_input_temp_gru2;
      addr_w_u_gru2 <= '0' & addr_w_u_temp_gru2;
      
-  start_ib<=starti or start_gru2;  
+  start_ib<=start or start_gru2;  
   input_done_g  <=  input_done_g_gru1 when GRU_sel='0' else
                     input_done_g_gru2; 
   h_prev_done_g <=  h_prev_done_g_gru1 when GRU_sel='0' else
@@ -471,16 +471,16 @@ begin
 -----duts------------------------------------------------------------------
      dut1:Mem_initial
      port map(
-        clk                     => clki                  ,
-        reset                   => reseti                ,
-        initial                 => initiali              ,
-        start                   => starti                ,
+        clk                     => clk                  ,
+        reset                   => reset                ,
+        initial                 => initial              ,
+        start                   => start                ,
         r_u_valid               => r_u_valid            ,
         xt_state                => xt_state             ,
         hprev_state             => hprev_state          ,
         xt_state_gru2           => xt_state_gru2     ,
         hprev_state_gru2        => hprev_state_gru2  ,
-        data_in                 => data_ini              ,
+        data_in                 => data_in              ,
         ht_in                   => h_t                 ,
         addr_input_in           => addr_input           ,
         addr_w_u_in             => addr_w_u             ,
@@ -492,20 +492,20 @@ begin
         addr_hprev_in_gru2      => addr_hprev_gru2      ,
         addr_fc_in              => addr_fc,
         start_gru2              => start_gru2             ,
-        input_write_en_wu       => input_write_en_wui       ,
-        input_write_en_wr       => input_write_en_wri       ,
-        input_write_en_wc       => input_write_en_wci       ,
-        input_write_en_bubr     => input_write_en_bubri     ,
-        input_write_en_bc       => input_write_en_bci       ,
-        input_write_en_xt       => input_write_en_xti       ,
-        input_write_en_hprev    => input_write_en_hprevi    ,
-        input_write_en_gru2_wu  => input_write_en_gru2_wui  ,
-        input_write_en_gru2_wr  => input_write_en_gru2_wri  ,
-        input_write_en_gru2_wc  => input_write_en_gru2_wci  ,
-        input_write_en_gru2_bubr=> input_write_en_gru2_bubri,
-        input_write_en_gru2_bc  => input_write_en_gru2_bci  ,
-        input_write_en_gru2_hprev => input_write_en_gru2_hprevi,
-        input_write_en_fc_weights => input_write_en_fc_weightsi,
+        input_write_en_wu       => input_write_en_wu       ,
+        input_write_en_wr       => input_write_en_wr       ,
+        input_write_en_wc       => input_write_en_wc       ,
+        input_write_en_bubr     => input_write_en_bubr     ,
+        input_write_en_bc       => input_write_en_bc       ,
+        input_write_en_xt       => input_write_en_xt       ,
+        input_write_en_hprev    => input_write_en_hprev    ,
+        input_write_en_gru2_wu  => input_write_en_gru2_wu  ,
+        input_write_en_gru2_wr  => input_write_en_gru2_wr  ,
+        input_write_en_gru2_wc  => input_write_en_gru2_wc  ,
+        input_write_en_gru2_bubr=> input_write_en_gru2_bubr,
+        input_write_en_gru2_bc  => input_write_en_gru2_bc  ,
+        input_write_en_gru2_hprev => input_write_en_gru2_hprev,
+        input_write_en_fc_weights => input_write_en_fc_weights,
         weight_u1_out           => weight_u1           ,
         weight_u2_out           => weight_u2           ,
         weight_r1_out           => weight_r1           ,
@@ -521,9 +521,9 @@ begin
              );
     dut2:GRU_select 
   Port map (
-            clk         =>   clki        ,
-            reset       =>   reseti      ,
-            start       =>   starti      ,
+            clk         =>   clk        ,
+            reset       =>   reset      ,
+            start       =>   start      ,
             start_gru2  =>   start_gru2 ,
             GRU_sel     =>   GRU_sel    
             );
@@ -531,8 +531,8 @@ begin
     dut3:counter_gate
     generic map(INPUT_SIZE => 256,SIZE_HOR => 384)       
     port map(
-        clk           => clki        ,
-        reset         => reseti      ,
+        clk           => clk        ,
+        reset         => reset      ,
         GRU_en        => GRU_en_gru1      ,
         input_done_g  => input_done_g_gru1 ,
         h_prev_done_g => h_prev_done_g_gru1,
@@ -543,9 +543,9 @@ begin
     dut4:counter
     generic map(INPUT_SIZE => 256,SIZE_HOR => 384)       
     port map(
-        clk         => clki        ,
-        reset       => reseti      ,
-        start       => starti      ,
+        clk         => clk        ,
+        reset       => reset      ,
+        start       => start     ,
         input_done  => input_done_gru1 ,
         h_prev_done => h_prev_done_gru1,
         op_done     => op_done_gru1    ,
@@ -555,9 +555,9 @@ begin
     dut5:input_controller
     generic map(INPUT_NUMBER_WIDTH=>8,HIDDEN_UNITS_NUMBER_WIDTH=>7,HIDDEN_LAYERS_NUMBER_WIDTH=>7,PARALLELISM_WIDTH=>3)
     port map(
-        clk            => clki           ,
-        reset          => reseti         ,
-        start          => starti         ,
+        clk            => clk           ,
+        reset          => reset         ,
+        start          => start         ,
         input_done     => input_done_gru1    ,
         h_prev_done    => h_prev_done_gru1   ,
         op_done        => op_done_gru1       ,
@@ -573,8 +573,8 @@ begin
               SIZE_HOR => 384 
                )
   Port map(
-           clk             => clki        ,   
-           reset           => reseti      ,   
+           clk             => clk        ,   
+           reset           => reset      ,   
            count_hor_g     =>  count_hor_g ,
            count_ver_g     =>  count_ver_g ,
            input1          =>  input1_o      ,
@@ -585,8 +585,8 @@ begin
            );     
 
     dut7: input_buffer 
-  Port map(clk         => clki        ,
-           reset       => reseti      ,
+  Port map(clk         => clk        ,
+           reset       => reset      ,
            start       => start_ib      ,
            input1      => input1     ,
            input2      => input2     ,
@@ -616,8 +616,8 @@ begin
   generic map(MED_WL=>24,
               MED_FL=>13
                )
-  Port map(clk               =>    clki             ,
-           reset             =>    reseti           ,
+  Port map(clk               =>    clk             ,
+           reset             =>    reset           ,
            GRU_en            =>    GRU_en          ,
            input_done_g      =>    input_done_g    ,
            h_prev_done_g     =>    h_prev_done_g   ,
@@ -642,8 +642,8 @@ begin
 dut9:counter_gate
     generic map(INPUT_SIZE => 128,SIZE_HOR => 256)       
     port map(
-        clk           => clki        ,
-        reset         => reseti      ,
+        clk           => clk        ,
+        reset         => reset      ,
         GRU_en        => GRU_en_gru2      ,
         input_done_g  => input_done_g_gru2 ,
         h_prev_done_g => h_prev_done_g_gru2,
@@ -654,8 +654,8 @@ dut9:counter_gate
     dut10:counter
     generic map(INPUT_SIZE => 128,SIZE_HOR => 256)       
     port map(
-        clk         => clki        ,
-        reset       => reseti      ,
+        clk         => clk        ,
+        reset       => reset      ,
         start       => start_gru2      ,
         input_done  => input_done_gru2 ,
         h_prev_done => h_prev_done_gru2,
@@ -668,8 +668,8 @@ dut9:counter_gate
               SIZE_HOR => 256 
                )
   Port map(
-           clk             => clki        ,   
-           reset           => reseti      ,   
+           clk             => clk        ,   
+           reset           => reset      ,   
            count_hor_g     =>  count_hor_g_gru2 ,
            count_ver_g     =>  count_ver_g_gru2 ,
            input1          =>  input1_o      ,
@@ -682,8 +682,8 @@ dut9:counter_gate
     dut12:input_controller
     generic map(INPUT_NUMBER_WIDTH=>7,HIDDEN_UNITS_NUMBER_WIDTH=>7,HIDDEN_LAYERS_NUMBER_WIDTH=>7,PARALLELISM_WIDTH=>3)
     port map(
-        clk            => clki           ,
-        reset          => reseti         ,
+        clk            => clk           ,
+        reset          => reset        ,
         start          => start_gru2     ,
         input_done     => input_done_gru2    ,
         h_prev_done    => h_prev_done_gru2   ,
@@ -700,8 +700,8 @@ dut9:counter_gate
   generic map(INPUT_SIZE=>128
            )
   Port map(
-        clk         => clki ,   
-        reset       => reseti , 
+        clk         => clk ,   
+        reset       => reset , 
         fc_en       => r_u_valid_gru2,  
         fc_done     => fc_done
          );                                                                    
@@ -712,8 +712,8 @@ dut9:counter_gate
           H_FL=>6
           )        
   Port map ( 
-        clk         => clki          ,
-        reset       => reseti        ,
+        clk         => clk          ,
+        reset       => reset        ,
         fc_en       => r_u_valid_gru2       ,
         fc_done     => fc_done      ,
         h_t_in      => h_t       ,
@@ -726,11 +726,11 @@ dut15: sigmoid_fc
 --  generic(SIG_WL:integer:=16;
 --          SIG_FL:integer:=6
 --          );
-  Port map (clk             => clki          ,
-        reset           => reseti        ,
+  Port map (clk             => clk          ,
+        reset           => reset        ,
         result_valid    => result_valid ,
         fc_in           => fc        ,
-        result          =>   data_outi ,
+        result          =>   data_out ,
         final_result    => final_result
           );
 
@@ -740,8 +740,8 @@ dut16:write_file
         INPUT_WIDTH=> 16
         )
     Port map(
-        clk =>clki,
-        reset  => reseti,
+        clk =>clk,
+        reset  => reset,
         write_file_en=>r_u_valid,
          end_sim =>end_sim,
         input_sample=>h_t
@@ -753,118 +753,118 @@ dut17:write_file
         INPUT_WIDTH=> 16
         )
     Port map(
-        clk =>clki,
-        reset  => reseti,
+        clk =>clk,
+        reset  => reset,
         write_file_en=>r_u_valid,
          end_sim =>end_sim,
         input_sample=>h_prev
         );
 
 --pad map---------------------------------------------------------------------------------
-  clkpad : CPAD_S_74x50u_IN
-    port map (
-      COREIO => clki,
-      PADIO  => clk
-      );
-  resetpad : CPAD_S_74x50u_IN
-    port map (
-      COREIO => reseti,
-      PADIO  => reset
-      );   
-   startpad : CPAD_S_74x50u_IN
-    port map (
-      COREIO => starti,
-      PADIO  => start
-      );
-   initialpad : CPAD_S_74x50u_IN
-    port map (
-      COREIO => initiali,
-      PADIO  => initial
-      );
-  InPads : for i in 0 to 15 generate
-    InPad : CPAD_S_74x50u_IN
-      port map (
-        COREIO => data_ini(i),
-        PADIO  => data_in(i)
-        );
-  end generate InPads;
-   OutPads : for i in 0 to 15 generate
-   OutPad : CPAD_S_74x50u_OUT
-      port map (
-        COREIO => data_outi(i),
-        PADIO  => data_out(i)
-        );
-  end generate OutPads;
-   enpad1 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_wui ,
-      PADIO  => input_write_en_wu 
-      );
-   enpad2 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO =>  input_write_en_wri,
-      PADIO  =>  input_write_en_wr
-      );
-   enpad3 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO =>  input_write_en_wci,
-      PADIO  =>  input_write_en_wc
-      );
-   enpad4 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_bubri ,
-      PADIO  => input_write_en_bubr
-      );
-   enpad5 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_bci,
-      PADIO  => input_write_en_bc
-      );
-   enpad6 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO =>  input_write_en_xti  ,
-      PADIO  =>  input_write_en_xt  
-      );
-   enpad7 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_hprevi ,
-      PADIO  => input_write_en_hprev 
-      );
-   enpad8 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_gru2_wui,
-      PADIO  => input_write_en_gru2_wu
-      );
-   enpad9 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_gru2_wri,
-      PADIO  => input_write_en_gru2_wr
-      );
-   enpad10 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_gru2_wci,
-      PADIO  => input_write_en_gru2_wc
-      );
-   enpad11 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO =>  input_write_en_gru2_bubri ,
-      PADIO  =>  input_write_en_gru2_bubr 
-      );
-   enpad12: CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_gru2_bci,
-      PADIO  => input_write_en_gru2_bc
-      );
-   enpad13 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_gru2_hprevi,
-      PADIO  => input_write_en_gru2_hprev
-      );
-   enpad14 : CPAD_S_74x50u_OUT
-    port map (
-      COREIO => input_write_en_fc_weightsi,
-      PADIO  => input_write_en_fc_weights
-      );
+--  clkpad : CPAD_S_74x50u_IN
+--    port map (
+--      COREIO => clki,
+--      PADIO  => clk
+--      );
+--  resetpad : CPAD_S_74x50u_IN
+--    port map (
+--      COREIO => reseti,
+--      PADIO  => reset
+--      );   
+--   startpad : CPAD_S_74x50u_IN
+--    port map (
+--      COREIO => starti,
+--      PADIO  => start
+--      );
+--   initialpad : CPAD_S_74x50u_IN
+--    port map (
+--      COREIO => initiali,
+--      PADIO  => initial
+--      );
+--  InPads : for i in 0 to 15 generate
+--    InPad : CPAD_S_74x50u_IN
+--      port map (
+--        COREIO => data_ini(i),
+--        PADIO  => data_in(i)
+--        );
+--  end generate InPads;
+--   OutPads : for i in 0 to 15 generate
+--   OutPad : CPAD_S_74x50u_OUT
+--      port map (
+--        COREIO => data_outi(i),
+--        PADIO  => data_out(i)
+--        );
+--  end generate OutPads;
+--   enpad1 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_wui ,
+--      PADIO  => input_write_en_wu 
+--      );
+--   enpad2 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO =>  input_write_en_wri,
+--      PADIO  =>  input_write_en_wr
+--      );
+--   enpad3 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO =>  input_write_en_wci,
+--      PADIO  =>  input_write_en_wc
+--      );
+--   enpad4 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_bubri ,
+--      PADIO  => input_write_en_bubr
+--      );
+--   enpad5 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_bci,
+--      PADIO  => input_write_en_bc
+--      );
+--   enpad6 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO =>  input_write_en_xti  ,
+--      PADIO  =>  input_write_en_xt  
+--      );
+--   enpad7 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_hprevi ,
+--      PADIO  => input_write_en_hprev 
+--      );
+--   enpad8 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_gru2_wui,
+--      PADIO  => input_write_en_gru2_wu
+--      );
+--   enpad9 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_gru2_wri,
+--      PADIO  => input_write_en_gru2_wr
+--      );
+--   enpad10 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_gru2_wci,
+--      PADIO  => input_write_en_gru2_wc
+--      );
+--   enpad11 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO =>  input_write_en_gru2_bubri ,
+--      PADIO  =>  input_write_en_gru2_bubr 
+--      );
+--   enpad12: CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_gru2_bci,
+--      PADIO  => input_write_en_gru2_bc
+--      );
+--   enpad13 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_gru2_hprevi,
+--      PADIO  => input_write_en_gru2_hprev
+--      );
+--   enpad14 : CPAD_S_74x50u_OUT
+--    port map (
+--      COREIO => input_write_en_fc_weightsi,
+--      PADIO  => input_write_en_fc_weights
+--      );
   
 
 end Behavioral;
