@@ -17,7 +17,7 @@ architecture Behavioral of tb_RNN is
 --component------------------------------------------------------
 component TOP_RNN is
 port(
-      clk                      : in std_logic;--top pad
+      clk_in                      : in std_logic;--top pad
       reset                    : in std_logic;--top pad
       initial                  : in std_logic;--top pad
       start                    : in std_logic;--top pad
@@ -40,18 +40,6 @@ port(
       );
 end component;
 
-component input_gen is
-    generic (
-        FILE_NAME: string ;
-        INPUT_WIDTH: positive
-        ); 
-    Port (
-        clk: in std_logic;
-        reset: in std_logic;
-        input_write_en: in std_logic;
-        input_sample: out std_logic_vector(INPUT_WIDTH-1 downto 0)
-        );
-end component;
 ------signals_gru1------------------------------------------------------------
 constant MED_WL          :integer:=24;
 constant MED_FL          :integer:=13;
@@ -94,191 +82,20 @@ constant period1              : time := 5ns;
    
 begin
 ----signals into chip-------------------------------------------------------------
-     data_in <= data_wu when input_write_en_wu = '1' else
-                data_wr when input_write_en_wr = '1' else
-                data_wc when input_write_en_wc = '1' else
-                data_bubr when input_write_en_bubr = '1' else
-                data_bc when input_write_en_bc = '1' else
-                data_xt when input_write_en_xt = '1' else
-                data_hprev when input_write_en_hprev = '1' else
-                data_gru2_wu when input_write_en_gru2_wu = '1' else
-                data_gru2_wr when input_write_en_gru2_wr = '1' else
-                data_gru2_wc when input_write_en_gru2_wc = '1' else
-                data_gru2_bubr when input_write_en_gru2_bubr = '1' else
-                data_gru2_bc when input_write_en_gru2_bc = '1' else 
-                data_gru2_hprev when input_write_en_gru2_hprev = '1' else
-                data_fc      when input_write_en_fc_weights = '1' else
-                (others=>'0');
+     data_in <=  (others=>'0');
      reset <= '1' ,
                '0' after    4*period1;        
      clk <= not (clk) after 1*period1;
      initial <= '1',
-                '0' after 6*period1;
+                '0' after 50*period1*5;
      start <= '0',
-               '1' after 200000*period1,
-               '0' after 200002*period1;
---bitstream----------------------------------------------------------------
-input_Wu: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\Wu_binary_new.txt" ,
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_wu,
-    input_sample => data_wu
-    );
+               '1' after 200000*period1*5,
+               '0' after 200002*period1*5;
 
-input_Wr: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\Wr_binary_new.txt" ,
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_wr,
-    input_sample =>data_wr
-    );
-input_Wc: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\Wc_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_wc,
-    input_sample => data_wc
-    );       
-
-input_xt: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\xt_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_xt,
-    input_sample => data_xt
-    );
-input_hprev: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\h175_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_hprev,
-    input_sample => data_hprev
-    );
-input_Bu_Br: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\BuBr_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_bubr,
-    input_sample => data_bubr
-    );
-input_Bc: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\Bc_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_bc,
-    input_sample => data_bc
-    );
-input_gru2_Wu: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_Wu_binary_new.txt" ,
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_gru2_wu,
-    input_sample => data_gru2_wu
-    );
-
-input_gru2_Wr: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_Wr_binary_new.txt" ,
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_gru2_wr,
-    input_sample =>data_gru2_wr
-    );
-input_gru2_Wc: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_Wc_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_gru2_wc,
-    input_sample => data_gru2_wc
-    );  
-input_gru2_BuBr: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_BuBr_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_gru2_bubr,
-    input_sample => data_gru2_bubr
-    );
-input_gru2_Bc: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_Bc_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_gru2_bc,
-    input_sample => data_gru2_bc
-    );
-input_gru2_hprev: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\GRU2_h_prev_binary_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_gru2_hprev,
-    input_sample => data_gru2_hprev
-    );
-input_fc_weights: input_gen 
-generic map(
-    FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\fc_weights_new.txt",
-    INPUT_WIDTH => 16
-    )
-Port map(
-    clk     => clk,
-    reset   => reset,
-    input_write_en => input_write_en_fc_weights,
-    input_sample => data_fc
-    );
 -----duts------------------------------------------------------------------
    top: TOP_RNN
    port map(
-        clk                      =>  clk                      ,
+        clk_in                   =>  clk                      ,
         reset                    =>  reset                    ,
         initial                  =>  initial                  ,
         start                    =>  start                    ,

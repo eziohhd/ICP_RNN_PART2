@@ -12,7 +12,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity TOP_RNN is
 port(
-      clk                     : in std_logic;--top pad
+      clk_in                  : in std_logic;--top pad
       reset                   : in std_logic;--top pad
       initial                 : in std_logic;--top pad
       start                   : in std_logic;--top pad
@@ -31,6 +31,7 @@ port(
       input_write_en_gru2_bc  : out std_logic; --top pad   
       input_write_en_gru2_hprev: out std_logic; --top pad     
       input_write_en_fc_weights: out std_logic;--top pad 
+      result_valid_out         : out std_logic;
       data_out                : out std_logic_vector(15 downto 0)--top pad 
       );
 end TOP_RNN;
@@ -50,6 +51,17 @@ architecture Behavioral of TOP_RNN is
 --      PADIO  : out std_logic);
 --  end component;
 
+component clk_wiz_0
+port
+ (-- Clock in ports
+  -- Clock out ports
+  clk_out1          : out    std_logic;
+  -- Status and control signals
+  reset             : in     std_logic;
+  locked            : out    std_logic;
+  clk_in1           : in     std_logic
+ );
+end component;
 component Mem_initial is
     Port (
         clk                     : in std_logic;--top pad
@@ -288,24 +300,13 @@ component sigmoid_fc is
           );
 end component;
 
-component write_file is
-    generic (
-        FILE_NAME: string ;
-        INPUT_WIDTH: positive
-        ); 
-    Port (
-        clk: in std_logic;
-        reset: in std_logic;
-        write_file_en: in std_logic;
-	end_sim      : in std_logic;
-        input_sample: in std_logic_vector(INPUT_WIDTH-1 downto 0)
-        );
-        end component;
 
-------signals_gru1------------------------------------------------------------
+------signals_gru1-----------------------------------------------------------
 constant MED_WL          :integer:=24;
 constant MED_FL          :integer:=13;
 constant FC_WL           :integer:=24;
+signal clk               : std_logic;
+signal locked            : std_logic;
 signal GRU_en            : std_logic;
 signal input_done_g        : std_logic;                   
 signal h_prev_done_g      : std_logic;                   
@@ -469,6 +470,15 @@ begin
   r_u_valid_gru1<=r_u_valid when GRU_sel='0' else
                   '0';
 -----duts------------------------------------------------------------------
+     dut_clock:clk_wiz_0
+        port map(
+        
+          clk_out1    => clk,
+          -- Status and control signals
+          reset       => reset,
+          locked      => locked,    
+          clk_in1     => clk_in
+         );
      dut1:Mem_initial
      port map(
         clk                     => clk                  ,
@@ -734,32 +744,7 @@ dut15: sigmoid_fc
         final_result    => final_result
           );
 
-dut16:write_file
- generic map(
-        FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\h_t.txt",
-        INPUT_WIDTH=> 16
-        )
-    Port map(
-        clk =>clk,
-        reset  => reset,
-        write_file_en=>r_u_valid,
-         end_sim =>end_sim,
-        input_sample=>h_t
-        );
-
-dut17:write_file
- generic map(
-        FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\h_prev.txt",
-        INPUT_WIDTH=> 16
-        )
-    Port map(
-        clk =>clk,
-        reset  => reset,
-        write_file_en=>r_u_valid,
-         end_sim =>end_sim,
-        input_sample=>h_prev
-        );
-
+result_valid_out <= result_valid;
 --pad map---------------------------------------------------------------------------------
 --  clkpad : CPAD_S_74x50u_IN
 --    port map (

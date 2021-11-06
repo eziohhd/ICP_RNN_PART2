@@ -4,54 +4,55 @@ use ieee.numeric_std.all;
 
 
 
--- -- ST_SPHDL_128x32_mem2010
---words = 128
---bits  = 32
+-- -- ST_SPHS_48x64_mem2011
+--words = 48
+--bits  = 64
 
-entity Mem128x32 is
+entity Mem48x64_Gru2_hprev2 is
   port (
     ClkxCI  : in  std_logic;
     CSxSI   : in  std_logic;            -- Active Low
     WExSI   : in  std_logic;            --Active Low
-    AddrxDI : in  std_logic_vector (6 downto 0);
+    AddrxDI : in  std_logic_vector (5 downto 0);
     RYxSO   : out std_logic;
-    DataxDI : in  std_logic_vector (31 downto 0);
-    DataxDO : out std_logic_vector (31 downto 0)
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
     );
-end Mem128x32;
+end Mem48x64_Gru2_hprev2;
 
 
-architecture rtl of Mem128x32 is
+architecture rtl of Mem48x64_Gru2_hprev2 is
   
---  component ST_SPHDL_128x32m8_L
+--  component ST_SPHS_48x64m4_L
 --    port (
---      Q       : out std_logic_vector (31 downto 0);
+--      Q       : out std_logic_vector (63 downto 0);
 --      RY      : out std_logic;
 --      CK      : in  std_logic;
 --      CSN     : in  std_logic;
 --      TBYPASS : in  std_logic;
 --      WEN     : in  std_logic;
---      A       : in  std_logic_vector (6 downto 0);
---      D       : in  std_logic_vector (31 downto 0)
+--      A       : in  std_logic_vector (5 downto 0);
+--      D       : in  std_logic_vector (63 downto 0)
 --      );
 --  end component;
---  component blk_mem_gen_1 is
+--component blk_mem_gen_2 is
 --  PORT (
 --    clka : IN STD_LOGIC;
 --    ena : IN STD_LOGIC;
 --    wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
---    addra : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
---    dina : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
---    douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+--    addra : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+--    dina : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+--    douta : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
 --  );
+
 --end component;
-component dist_mem_gen_1 is
+component dist_mem_gen_18 is
   PORT (
-    a : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
-    d : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    a : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+    d : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
     clk : IN STD_LOGIC;
     we : IN STD_LOGIC;
-    spo : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+    spo : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
   );
 end component;
 
@@ -68,7 +69,7 @@ begin
   wen <= not WExSI;
 
 -- mem2011
---  DUT_ST_SPHDL_128x32_mem2010 : blk_mem_gen_1
+--  DUT_ST_SPHS_48x64_mem2011 :blk_mem_gen_5
 --    port map(
 --        clka => ClkxCI,
 --        ena  => csn,
@@ -77,15 +78,13 @@ begin
 --        dina  => DataxDI,
 --        douta => DataxDO  
 --        );
-    DUT_ST_SPHDL_128x32_mem2010 : dist_mem_gen_1
-    port map(  
+  DUT_ST_SPHS_48x64_mem2011 :dist_mem_gen_18
+    port map(
         a   => AddrxDI,
         d   => DataxDI,
         clk => ClkxCI,
         we  => wen,
-        spo => DataxDO   
-    );
-
+        spo => DataxDO 
+        );
 end rtl;
-
 

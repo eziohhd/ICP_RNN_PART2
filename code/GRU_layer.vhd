@@ -155,19 +155,6 @@ component output_stage is
         );
 end component;
 
-component write_file is
-    generic (
-        FILE_NAME: string ;
-        INPUT_WIDTH: positive
-        ); 
-    Port (
-        clk: in std_logic;
-        reset: in std_logic;
-        write_file_en: in std_logic;
-	end_sim      : in std_logic;
-        input_sample: in std_logic_vector(INPUT_WIDTH-1 downto 0)
-        );
-        end component;
 
 
 
@@ -262,30 +249,5 @@ dut66:r_u_controller
         h_t         =>  h_t      
         );
 
-dut101:write_file
- generic map(
-        FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\u_t.txt",
-        INPUT_WIDTH=> 16
-        )
-    Port map(
-        clk =>clk,
-        reset  => reset,
-        write_file_en=>r_u_valid,
-         end_sim =>end_sim,
-        input_sample=>u_t
-        );
-
-dut102:write_file
- generic map(
-        FILE_NAME => "C:\Users\Nitro 5\Desktop\ICP_RNN_PART2\ICP_RNN_PART2\binary_files\r_t.txt",
-        INPUT_WIDTH=> 16
-        )
-    Port map(
-        clk =>clk,
-        reset  => reset,
-        write_file_en=>r_u_valid,
-         end_sim =>end_sim,
-        input_sample=>r_t
-        );
 r_u_valid_o<=r_u_valid;
 end Behavioral;

@@ -8,7 +8,7 @@ use ieee.numeric_std.all;
 --words = 48
 --bits  = 64
 
-entity Mem48x64 is
+entity Mem48x64_ht2 is
   port (
     ClkxCI  : in  std_logic;
     CSxSI   : in  std_logic;            -- Active Low
@@ -18,10 +18,10 @@ entity Mem48x64 is
     DataxDI : in  std_logic_vector (63 downto 0);
     DataxDO : out std_logic_vector (63 downto 0)
     );
-end Mem48x64;
+end Mem48x64_ht2;
 
 
-architecture rtl of Mem48x64 is
+architecture rtl of Mem48x64_ht2 is
   
 --  component ST_SPHS_48x64m4_L
 --    port (
@@ -46,7 +46,7 @@ architecture rtl of Mem48x64 is
 --  );
 
 --end component;
-component dist_mem_gen_2 is
+component dist_mem_gen_10 is
   PORT (
     a : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
     d : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
@@ -69,7 +69,7 @@ begin
   wen <= not WExSI;
 
 -- mem2011
---  DUT_ST_SPHS_48x64_mem2011 :blk_mem_gen_2
+--  DUT_ST_SPHS_48x64_mem2011 :blk_mem_gen_5
 --    port map(
 --        clka => ClkxCI,
 --        ena  => csn,
@@ -78,7 +78,7 @@ begin
 --        dina  => DataxDI,
 --        douta => DataxDO  
 --        );
-  DUT_ST_SPHS_48x64_mem2011 :dist_mem_gen_2
+  DUT_ST_SPHS_48x64_mem2011 :dist_mem_gen_10
     port map(
         a   => AddrxDI,
         d   => DataxDI,

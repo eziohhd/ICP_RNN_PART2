@@ -96,7 +96,7 @@ component FF
         reset:  in std_logic
       );
 end component;
-component Mem9600x64 is
+component Mem9600x64_Wu is
   port (
     ClkxCI  : in  std_logic;
     CSxSI   : in  std_logic;            -- Active Low
@@ -107,18 +107,29 @@ component Mem9600x64 is
     DataxDO : out std_logic_vector (63 downto 0)
     );
 end component;
-component Mem48x64 is
+component Mem9600x64_Wr is
   port (
     ClkxCI  : in  std_logic;
     CSxSI   : in  std_logic;            -- Active Low
     WExSI   : in  std_logic;            --Active Low
-    AddrxDI : in  std_logic_vector (5 downto 0);
+    AddrxDI : in  std_logic_vector (13 downto 0);
     RYxSO   : out std_logic;
     DataxDI : in  std_logic_vector (63 downto 0);
     DataxDO : out std_logic_vector (63 downto 0)
     );
 end component;
-component Mem128x32 is
+component Mem9600x64_Wc is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (13 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem128x32_bubr is
   port (
     ClkxCI  : in  std_logic;
     CSxSI   : in  std_logic;            -- Active Low
@@ -129,6 +140,172 @@ component Mem128x32 is
     DataxDO : out std_logic_vector (31 downto 0)
     );
 end component;
+component Mem128x32_bc is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (6 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (31 downto 0);
+    DataxDO : out std_logic_vector (31 downto 0)
+    );
+end component;
+component Mem48x64_Xt1 is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (5 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem48x64_Xt2 is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (5 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem48x64_hprev1 is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (5 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem48x64_hprev2 is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (5 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem48x64_ht1 is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (5 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem48x64_ht2 is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (5 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem128x32_fc_weights is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (6 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (31 downto 0);
+    DataxDO : out std_logic_vector (31 downto 0)
+    );
+end component;
+component Mem9600x64_Gru2_Wu is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (13 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem9600x64_Gru2_Wr is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (13 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem9600x64_Gru2_Wc is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (13 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem128x32_Gru2_bubr is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (6 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (31 downto 0);
+    DataxDO : out std_logic_vector (31 downto 0)
+    );
+end component;
+component Mem128x32_Gru2_bc is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (6 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (31 downto 0);
+    DataxDO : out std_logic_vector (31 downto 0)
+    );
+end component;
+component Mem48x64_Gru2_hprev1 is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (5 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+component Mem48x64_Gru2_hprev2 is
+  port (
+    ClkxCI  : in  std_logic;
+    CSxSI   : in  std_logic;            -- Active Low
+    WExSI   : in  std_logic;            --Active Low
+    AddrxDI : in  std_logic_vector (5 downto 0);
+    RYxSO   : out std_logic;
+    DataxDI : in  std_logic_vector (63 downto 0);
+    DataxDO : out std_logic_vector (63 downto 0)
+    );
+end component;
+
 ------signals------------------------------------------------------------
 
 type state_type_mem is (idle, initial_wu,initial_wr,initial_wc,initial_bubr,initial_bc,initial_xt1,initial_xt2,initial_hprev1,initial_hprev2,load,
@@ -143,6 +320,12 @@ signal weight_r1               : std_logic_vector(31 downto 0);
 signal weight_r2               : std_logic_vector(31 downto 0);
 signal weight_c1               : std_logic_vector(31 downto 0);
 signal weight_c2               : std_logic_vector(31 downto 0);
+signal weight_u1_gru1          : std_logic_vector(31 downto 0);--weights output for calculation
+signal weight_u2_gru1          : std_logic_vector(31 downto 0);
+signal weight_r1_gru1          : std_logic_vector(31 downto 0);
+signal weight_r2_gru1          : std_logic_vector(31 downto 0);
+signal weight_c1_gru1          : std_logic_vector(31 downto 0);
+signal weight_c2_gru1          : std_logic_vector(31 downto 0);
 signal weight_1u               : std_logic_vector(63 downto 0);--update gate weights
 signal weight_1r               : std_logic_vector(63 downto 0);
 signal weight_1c               : std_logic_vector(63 downto 0);
@@ -151,6 +334,11 @@ signal hprev1,hprev2           : std_logic_vector(63 downto 0);
 signal ht1,ht2                 : std_logic_vector(63 downto 0);
 signal bias_bubr               : std_logic_vector(31 downto 0); 
 signal bias_bc                 : std_logic_vector(31 downto 0);
+signal weight_gru2_1u          : std_logic_vector(63 downto 0);--update gate weights
+signal weight_gru2_1r          : std_logic_vector(63 downto 0);
+signal weight_gru2_1c          : std_logic_vector(63 downto 0);
+signal gru2_bias_bubr          : std_logic_vector(31 downto 0); 
+signal gru2_bias_bc            : std_logic_vector(31 downto 0);
 signal bitstream_weights       : std_logic_vector(63 downto 0);
 signal bitstream_weights_next  : std_logic_vector(63 downto 0);
 signal bitstream_bias          : std_logic_vector(31 downto 0);
@@ -211,6 +399,7 @@ signal weight_r1_gru2          : std_logic_vector(31 downto 0);
 signal weight_r2_gru2          : std_logic_vector(31 downto 0);
 signal weight_c1_gru2          : std_logic_vector(31 downto 0);
 signal weight_c2_gru2          : std_logic_vector(31 downto 0);
+signal hprev1_gru2,hprev2_gru2 : std_logic_vector(63 downto 0);
 signal bitstream_fc            : std_logic_vector(31 downto 0);
 signal bitstream_fc_next       : std_logic_vector(31 downto 0);
 signal fc_weights              : std_logic_vector(31 downto 0);
@@ -229,12 +418,14 @@ signal   weight_r1_out_delay     : std_logic_vector(31 downto 0);
 signal   weight_r2_out_delay     : std_logic_vector(31 downto 0);
 signal   weight_c1_out_delay     : std_logic_vector(31 downto 0);
 signal   weight_c2_out_delay     : std_logic_vector(31 downto 0);
-signal   xt1_delay        : std_logic_vector(63 downto 0);
-signal   xt2_delay        : std_logic_vector(63 downto 0);
-signal   ht1_delay        : std_logic_vector(63 downto 0);
-signal   ht2_delay        : std_logic_vector(63 downto 0);
-signal   hprev1_delay        : std_logic_vector(63 downto 0);
-signal   hprev2_delay        : std_logic_vector(63 downto 0);
+signal   xt1_delay               : std_logic_vector(63 downto 0);
+signal   xt2_delay               : std_logic_vector(63 downto 0);
+signal   ht1_delay               : std_logic_vector(63 downto 0);
+signal   ht2_delay               : std_logic_vector(63 downto 0);
+signal   hprev1_delay            : std_logic_vector(63 downto 0);
+signal   hprev2_delay            : std_logic_vector(63 downto 0);
+signal   hprev1_gru2_delay       : std_logic_vector(63 downto 0);
+signal   hprev2_gru2_delay       : std_logic_vector(63 downto 0);
 signal   fc_weights_out_delay    : std_logic_vector(31 downto 0);
 signal   bias_out_delay          : std_logic_vector(31 downto 0);
 
@@ -253,28 +444,29 @@ weight_c2_out_delay <= weight_c2;
 input1_out    <= xt1_delay(63 downto 32) when xt_state = '1' else
                  hprev1_delay(63 downto 32) when hprev_state = '1' else
                  ht1_delay(56 downto 48)&"0000000"&ht1_delay(40 downto 32)&"0000000" when xt_state_gru2 = '1' else
-                 hprev1_delay(63 downto 32) when hprev_state_gru2 = '1' else
+                 hprev1_gru2_delay(63 downto 32) when hprev_state_gru2 = '1' else
                  xt1_delay(63 downto 32);
                 -- (others => '0');   
 input2_out    <= xt1_delay(31 downto 0) when xt_state = '1' else
                  hprev1_delay(31 downto 0) when hprev_state = '1' else
                  ht1_delay(24 downto 16)&"0000000"&ht1_delay(8 downto 0)&"0000000" when xt_state_gru2 = '1' else
-                 hprev1_delay(31 downto 0) when hprev_state_gru2 = '1' else
+                 hprev1_gru2_delay(31 downto 0) when hprev_state_gru2 = '1' else
                  xt1_delay(31 downto 0);
                  --(others => '0');  
 input3_out    <= xt2_delay(63 downto 32) when xt_state = '1' else
                  hprev2_delay(63 downto 32) when hprev_state = '1' else
                  ht2_delay(56 downto 48)&"0000000"&ht2_delay(40 downto 32)&"0000000" when xt_state_gru2 = '1' else
-                 hprev2_delay(63 downto 32) when hprev_state_gru2 = '1' else
+                 hprev2_gru2_delay(63 downto 32) when hprev_state_gru2 = '1' else
                  xt2(63 downto 32);
                  --(others => '0');  
 input4_out   <= xt2_delay(31 downto 0) when xt_state = '1' else
                  hprev2_delay(31 downto 0) when hprev_state = '1' else
                  ht2_delay(24 downto 16)&"0000000"&ht2_delay(8 downto 0)&"0000000" when xt_state_gru2 = '1' else
-                 hprev2_delay(31 downto 0) when hprev_state_gru2 = '1' else
+                 hprev2_gru2_delay(31 downto 0) when hprev_state_gru2 = '1' else
                  xt2_delay(31 downto 0);
                  --(others => '0');   
-bias_out_delay      <= bias_bubr(31 downto 16) & bias_bc(31 downto 16); 
+bias_out_delay      <= bias_bubr(31 downto 16) & bias_bc(31 downto 16) when loading ='1' else
+                       gru2_bias_bubr(31 downto 16) & gru2_bias_bc(31 downto 16) ;   
 fc_weights_out_delay <= fc_weights;
 --------------------addresses------------------------------------------------
 addr_weights_mem  <= addr_weights when loading ='0'and loading_gru2 = '0' else 
@@ -291,32 +483,53 @@ addr_hprev_mem <= addr_hprev when loading ='0'and loading_gru2 = '0' else
                     addr_hprev_in(5 downto 0) when loading = '1' and loading_gru2 = '0' else     
                     addr_hprev_in_gru2(5 downto 0) when loading = '0' and loading_gru2 = '1' else
                     (others => '0');   
-addr_fc_mem <= addr_fc when loading_gru2 = '0' else '0'&addr_fc_in;                                            
+addr_fc_mem <= addr_fc when loading_gru2 = '0' else '0'&addr_fc_in;    
+
+----------------------signal selection between gru1 and gru2-----------------------------
+weight_u1 <= weight_u1_gru1 when loading = '1' and loading_gru2 = '0' else 
+             weight_u1_gru2 when loading = '0' and loading_gru2 = '1' else 
+             weight_u1_gru2;
+weight_u2 <= weight_u2_gru1 when loading = '1' and loading_gru2 = '0' else
+             weight_u2_gru2 when loading = '0' and loading_gru2 = '1' else 
+             weight_u2_gru2; 
+weight_r1 <= weight_r1_gru1 when loading = '1' and loading_gru2 = '0' else
+             weight_r1_gru2 when loading = '0' and loading_gru2 = '1' else 
+             weight_r1_gru2;
+weight_r2 <= weight_r2_gru1 when loading = '1' and loading_gru2 = '0' else
+             weight_r2_gru2 when loading = '0' and loading_gru2 = '1' else 
+             weight_r2_gru2;
+weight_c1 <= weight_c1_gru1 when loading = '1' and loading_gru2 = '0' else
+             weight_c1_gru2 when loading = '0' and loading_gru2 = '1' else 
+             weight_c1_gru2;
+weight_c2 <= weight_c2_gru1 when loading = '1' and loading_gru2 = '0' else
+             weight_c2_gru2 when loading = '0' and loading_gru2 = '1' else 
+             weight_c2_gru2;
+                                        
 --------------------combinational_logic_gru1---------------------------------------------
-weight_u1 <= weight_1u(63 downto 32) when addr_w_u_in < 6145 else
+weight_u1_gru1 <= weight_1u(63 downto 32) when addr_w_u_in < 6145 else
              (others =>'0');
-weight_u2 <= weight_1u(31 downto 0) when addr_w_u_in < 6145 else
+weight_u2_gru1 <= weight_1u(31 downto 0) when addr_w_u_in < 6145 else
              (others =>'0');    
-weight_r1 <= weight_1r(63 downto 32) when addr_w_u_in < 6145 else
+weight_r1_gru1 <= weight_1r(63 downto 32) when addr_w_u_in < 6145 else
              (others =>'0');
-weight_r2 <= weight_1r(31 downto 0) when addr_w_u_in < 6145 else
+weight_r2_gru1 <= weight_1r(31 downto 0) when addr_w_u_in < 6145 else
              (others =>'0');
-weight_c1 <= weight_1c(63 downto 32) when addr_w_u_in < 6145 else
+weight_c1_gru1 <= weight_1c(63 downto 32) when addr_w_u_in < 6145 else
              (others =>'0');
-weight_c2 <= weight_1c(31 downto 0) when addr_w_u_in < 6145 else
+weight_c2_gru1 <= weight_1c(31 downto 0) when addr_w_u_in < 6145 else
              (others =>'0');       
 -----------------combinational_logic_gru2--------------------------------------------
-weight_u1_gru2 <= weight_1u(63 downto 32) when addr_w_u_in_gru2 < 4097 else
+weight_u1_gru2 <= weight_gru2_1u(63 downto 32) when addr_w_u_in_gru2 < 4097 else
              (others =>'0');
-weight_u2_gru2 <= weight_1u(31 downto 0) when addr_w_u_in_gru2 < 4097 else
+weight_u2_gru2 <= weight_gru2_1u(31 downto 0) when addr_w_u_in_gru2 < 4097 else
              (others =>'0');    
-weight_r1_gru2 <= weight_1r(63 downto 32) when addr_w_u_in_gru2< 4097 else
+weight_r1_gru2 <= weight_gru2_1r(63 downto 32) when addr_w_u_in_gru2< 4097 else
              (others =>'0');
-weight_r2_gru2 <= weight_1r(31 downto 0) when addr_w_u_in_gru2 < 4097 else
+weight_r2_gru2 <= weight_gru2_1r(31 downto 0) when addr_w_u_in_gru2 < 4097 else
              (others =>'0');
-weight_c1_gru2 <= weight_1c(63 downto 32) when addr_w_u_in_gru2 < 4097 else
+weight_c1_gru2 <= weight_gru2_1c(63 downto 32) when addr_w_u_in_gru2 < 4097 else
              (others =>'0');
-weight_c2_gru2 <= weight_1c(31 downto 0) when addr_w_u_in_gru2 < 4097 else
+weight_c2_gru2 <= weight_gru2_1c(31 downto 0) when addr_w_u_in_gru2 < 4097 else
              (others =>'0');             
 -------------fsm------------------------------------------------------------
 sequential:process(clk,reset)
@@ -391,7 +604,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_wu=>
                 input_write_en_wu <= '1';
-                wen_wu <= '0';
+                --wen_wu <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2);
                 bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
@@ -405,7 +618,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_wr=>
                 input_write_en_wr <= '1';
-                wen_wr <= '0';
+               -- wen_wr <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2); 
                 bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
@@ -419,7 +632,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_wc=>
                 input_write_en_wc <= '1';
-                wen_wc <= '0';
+               -- wen_wc <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2);  
                 bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
@@ -433,7 +646,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_bubr=>
                 input_write_en_bubr <= '1';
-                wen_bubr <= '0';
+               -- wen_bubr <= '0';
                 bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                 counter_bias_next <= counter_bias + 1;
                 addr_bias_n <= counter_bias;
@@ -446,7 +659,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_bc=>
                 input_write_en_bc <= '1';
-                wen_bc <= '0';
+               -- wen_bc <= '0';
                 bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                 counter_bias_next <= counter_bias + 1;
                 addr_bias_n <= counter_bias; 
@@ -459,7 +672,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_xt1=>
                 input_write_en_xt <= '1';
-                wen_xt1 <= '0';
+               -- wen_xt1 <= '0';
                 addr_xt_n <= '0'&counter_xt(7 downto 3);
                 counter_xt_next <= counter_xt+1;
                 counter_change_next <= counter_xt; 
@@ -471,7 +684,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_xt2=>
                 input_write_en_xt <= '1';
-                wen_xt2 <= '0'; 
+                --wen_xt2 <= '0'; 
                 addr_xt_n <= '0'&counter_xt(7 downto 3);
                 counter_xt_next <= counter_xt+1; 
                 counter_change_next <= counter_xt;  
@@ -488,7 +701,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 
             when initial_hprev1=>
                 input_write_en_hprev <= '1';
-                wen_hprev1 <= '0';
+                --wen_hprev1 <= '0';
                 counter_hprev_next <= counter_hprev + 1; 
                 counter_change_next <= '0'&counter_hprev;
                 addr_hprev_n <= addr_hprev;
@@ -499,7 +712,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                     next_state <= initial_hprev1;  
                 end if;  
             when initial_hprev2=>
-                wen_hprev2 <= '0';
+               -- wen_hprev2 <= '0';
                 input_write_en_hprev <= '1';
                 if counter_hprev = 127 then
                     counter_hprev_next <= counter_hprev;        
@@ -535,7 +748,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if; 
             when initial_gru2_wu =>
                 input_write_en_gru2_wu <= '1';
-                wen_wu <= '0';
+                --wen_wu <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2);
                 bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
@@ -549,7 +762,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_gru2_wr =>
                 input_write_en_gru2_wr <= '1';
-                wen_wr <= '0';
+               -- wen_wr <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2); 
                 bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
@@ -563,7 +776,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_gru2_wc=>
                 input_write_en_gru2_wc <= '1';
-                wen_wc <= '0';
+                --wen_wc <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2);  
                 bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
@@ -577,7 +790,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_gru2_bubr=>
                 input_write_en_gru2_bubr <= '1';
-                wen_bubr <= '0';
+                --wen_bubr <= '0';
                 bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                 counter_bias_next <= counter_bias + 1;
                 addr_bias_n <= counter_bias;
@@ -590,7 +803,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_gru2_bc=>
                 input_write_en_gru2_bc <= '1';
-                wen_bc <= '0';
+                --wen_bc <= '0';
                 bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                 counter_bias_next <= counter_bias + 1;
                 addr_bias_n <= counter_bias; 
@@ -603,7 +816,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when initial_gru2_hprev1=>
                 input_write_en_gru2_hprev <= '1';
-                wen_hprev1 <= '0';
+                --wen_hprev1 <= '0';
                 counter_hprev_next <= counter_hprev + 1; 
                 counter_change_next <= '0'&counter_hprev;
                 addr_hprev_n <= addr_hprev;
@@ -614,7 +827,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                     next_state <= initial_gru2_hprev1;  
                 end if;  
             when initial_gru2_hprev2=>
-                wen_hprev2 <= '0';
+               -- wen_hprev2 <= '0';
                 input_write_en_gru2_hprev <= '1';
                 if counter_hprev = 127 then
                     counter_hprev_next <= counter_hprev;        
@@ -638,7 +851,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if; 
             when initial_fc_weights =>
                 input_write_en_fc_weights <= '1';
-                wen_fc <= '0';
+                --wen_fc <= '0';
                 bitstream_fc_next <= bitstream_fc(15 downto 0)&data_in;
                 counter_fc_next <= counter_fc + 1;
                 addr_fc_n <= '0'&counter_fc(6 downto 1); 
@@ -896,7 +1109,7 @@ wen_fc_ff : FF
           clk => clk,
           reset => reset
           );  
-wu : Mem9600x64
+wu : Mem9600x64_Wu
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -906,7 +1119,7 @@ port map(
      DataxDI =>  bitstream_weights,
      DataxDO =>  weight_1u
     );
-wr : Mem9600x64
+wr : Mem9600x64_Wr
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -916,7 +1129,7 @@ port map(
      DataxDI =>  bitstream_weights,
      DataxDO =>  weight_1r
     );
-wc : Mem9600x64
+wc : Mem9600x64_Wc
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -926,7 +1139,7 @@ port map(
      DataxDI =>  bitstream_weights,
      DataxDO =>  weight_1c
     );
-bu_br : Mem128x32
+bu_br : Mem128x32_bubr
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -936,7 +1149,7 @@ port map(
      DataxDI =>  bitstream_bias,
      DataxDO =>  bias_bubr
     );
-bc_ff : Mem128x32
+bc_ff : Mem128x32_bc
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -946,7 +1159,7 @@ port map(
      DataxDI =>  bitstream_bias,
      DataxDO =>  bias_bc
     );
-xt1_ff : Mem48x64
+xt1_ff : Mem48x64_Xt1
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -956,7 +1169,7 @@ port map(
      DataxDI =>  bitstream_xt,
      DataxDO =>  xt1 
     );
-xt2_ff : Mem48x64
+xt2_ff : Mem48x64_Xt2
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -966,7 +1179,7 @@ port map(
      DataxDI =>  bitstream_xt,
      DataxDO =>  xt2 
     );
-hprev1_ff : Mem48x64
+hprev1_ff : Mem48x64_hprev1
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -976,7 +1189,7 @@ port map(
      DataxDI =>  bitstream_hprev,
      DataxDO =>  hprev1 
     );
-hprev2_ff : Mem48x64
+hprev2_ff : Mem48x64_hprev2
 port map(
      ClkxCI  =>  clk,             
      CSxSI   =>  '0',             
@@ -986,7 +1199,7 @@ port map(
      DataxDI =>  bitstream_hprev,
      DataxDO =>  hprev2           
     );
-ht1_ff : Mem48x64
+ht1_ff : Mem48x64_ht1
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
@@ -996,7 +1209,7 @@ port map(
      DataxDI =>  bitstream_ht,
      DataxDO =>  ht1 
     );
-ht2_ff : Mem48x64
+ht2_ff : Mem48x64_ht2
 port map(
      ClkxCI  =>  clk,             
      CSxSI   =>  '0',             
@@ -1006,17 +1219,87 @@ port map(
      DataxDI =>  bitstream_ht,
      DataxDO =>  ht2           
     );
-fc_weights_ff : Mem128x32
+gru2_wu : Mem9600x64_Gru2_Wu
 port map(
      ClkxCI  =>  clk,
      CSxSI   =>  '0',
-     WExSI   =>  wen_fc_c(0),
+     WExSI   =>  wen_wu,
+     AddrxDI =>  addr_weights_mem,
+     RYxSO   =>  ryxso1,
+     DataxDI =>  bitstream_weights,
+     DataxDO =>  weight_gru2_1u
+    );
+gru2_wr : Mem9600x64_Gru2_Wr
+port map(
+     ClkxCI  =>  clk,
+     CSxSI   =>  '0',
+     WExSI   =>  wen_wr,
+     AddrxDI =>  addr_weights_mem,
+     RYxSO   =>  ryxso2,
+     DataxDI =>  bitstream_weights,
+     DataxDO =>  weight_gru2_1r
+    );
+gru2_wc : Mem9600x64_Gru2_Wc
+port map(
+     ClkxCI  =>  clk,
+     CSxSI   =>  '0',
+     WExSI   =>  wen_wc,
+     AddrxDI =>  addr_weights_mem,
+     RYxSO   =>  ryxso3,
+     DataxDI =>  bitstream_weights,
+     DataxDO =>  weight_gru2_1c
+    );
+gru2_bu_br : Mem128x32_Gru2_bubr
+port map(
+     ClkxCI  =>  clk,
+     CSxSI   =>  '0',
+     WExSI   =>  wen_bubr,
+     AddrxDI =>  addr_bias_mem,
+     RYxSO   =>  ryxso4,
+     DataxDI =>  bitstream_bias,
+     DataxDO =>  gru2_bias_bubr
+    );
+gru2_bc_ff : Mem128x32_Gru2_bc
+port map(
+     ClkxCI  =>  clk,
+     CSxSI   =>  '0',
+     WExSI   =>  wen_bc,
+     AddrxDI =>  addr_bias_mem,
+     RYxSO   =>  ryxso5,
+     DataxDI =>  bitstream_bias,
+     DataxDO =>  gru2_bias_bc
+    );
+gru2_hprev1_ff : Mem48x64_Gru2_hprev1
+port map(
+     ClkxCI  =>  clk,
+     CSxSI   =>  '0',
+     WExSI   =>  wen_hprev1,
+     AddrxDI =>  addr_hprev_mem,
+     RYxSO   =>  ryxso8,
+     DataxDI =>  bitstream_hprev,
+     DataxDO =>  hprev1_gru2 
+    );
+gru2_hprev2_ff : Mem48x64_Gru2_hprev2
+port map(
+     ClkxCI  =>  clk,             
+     CSxSI   =>  '0',             
+     WExSI   =>  wen_hprev2,       
+     AddrxDI =>  addr_hprev_mem,  
+     RYxSO   =>  ryxso9,           
+     DataxDI =>  bitstream_hprev,
+     DataxDO =>  hprev2_gru2           
+    );
+fc_weights_ff : Mem128x32_fc_weights
+port map(
+     ClkxCI  =>  clk,
+     CSxSI   =>  '0',
+     WExSI   =>  '1',
      AddrxDI =>  addr_fc_mem,
      RYxSO   =>  ryxso12,
      DataxDI =>  bitstream_fc,
      DataxDO =>  fc_weights
     );
-    
+   
 ---------------------------delay ff-------------------------------------------
 weight_u1_out_delay_ff : FF
     generic map(N => 32)
@@ -1112,6 +1395,22 @@ hprev2_delay_ff : FF
     port map(
           D  => hprev2,       
           Q  => hprev2_delay,
+          clk => clk,
+          reset => reset
+          );
+gru2_hprev1_delay_ff : FF
+    generic map(N => 64)
+    port map(
+          D  => hprev1_gru2,       
+          Q  => hprev1_gru2_delay,
+          clk => clk,
+          reset => reset
+          );
+gru2_hprev2_delay_ff : FF
+    generic map(N => 64)
+    port map(
+          D  => hprev2_gru2,       
+          Q  => hprev2_gru2_delay,
           clk => clk,
           reset => reset
           );
