@@ -16,23 +16,9 @@ port(
       reset                   : in std_logic;--top pad
       initial                 : in std_logic;--top pad
       start                   : in std_logic;--top pad
-      data_in                 : in std_logic_vector(15 downto 0);--top pad
-      input_write_en_wu       : out std_logic; --top pad
-      input_write_en_wr       : out std_logic; --top pad
-      input_write_en_wc       : out std_logic; --top pad
-      input_write_en_bubr     : out std_logic; --top pad
-      input_write_en_bc       : out std_logic; --top pad
-      input_write_en_xt       : out std_logic; --top pad
-      input_write_en_hprev    : out std_logic; --top pad    
-      input_write_en_gru2_wu  : out std_logic; --top pad
-      input_write_en_gru2_wr  : out std_logic; --top pad
-      input_write_en_gru2_wc  : out std_logic; --top pad
-      input_write_en_gru2_bubr: out std_logic; --top pad
-      input_write_en_gru2_bc  : out std_logic; --top pad   
-      input_write_en_gru2_hprev: out std_logic; --top pad     
-      input_write_en_fc_weights: out std_logic;--top pad 
-      result_valid_out         : out std_logic;
-      data_out                : out std_logic_vector(15 downto 0)--top pad 
+      final_result         : out std_logic;
+      clk_out              : out std_logic
+      --data_out                : out std_logic_vector(15 downto 0)--top pad 
       );
 end TOP_RNN;
 
@@ -73,7 +59,6 @@ component Mem_initial is
         hprev_state             : in std_logic;
         xt_state_gru2           : in std_logic;
         hprev_state_gru2        : in std_logic;
-        data_in                 : in std_logic_vector(15 downto 0);--top pad
         ht_in                   : in std_logic_vector(15 downto 0);
         addr_input_in           : in std_logic_vector(6 downto 0);                  
         addr_w_u_in             : in std_logic_vector(12 downto 0);--13 bit:6144
@@ -403,7 +388,6 @@ signal h_can_gru2             : std_logic_vector(15 downto 0);
 signal h_t_gru2               : std_logic_vector(15 downto 0);
 signal fc_done                : std_logic;
 signal result_valid           : std_logic;
-signal final_result           : std_logic;
 signal fc                     : std_logic_vector(15 downto 0); 
 signal result                 : std_logic_vector(15 downto 0);
 signal h_prev                 : std_logic_vector(15 downto 0); 
@@ -420,6 +404,7 @@ signal op_done_g_gru1           : std_logic;
 signal start_ib                : std_logic;
 signal GRU_en_gru1            : std_logic;
 signal r_u_valid_gru1         : std_logic;  
+signal data_in                : std_logic_vector(15 downto 0);--top pad
 ----signals for pads---------------------------------------------------------------------
 --signal clki,reseti                   : std_logic;  
 --signal starti                        : std_logic;  
@@ -440,9 +425,26 @@ signal r_u_valid_gru1         : std_logic;
 --signal input_write_en_gru2_bci       : std_logic;  
 --signal input_write_en_gru2_hprevi    : std_logic; 
 --signal input_write_en_fc_weightsi    : std_logic;
-
+-------------------------useless signals------------------------------
+signal      input_write_en_wu       : std_logic; 
+signal      input_write_en_wr       : std_logic; 
+signal      input_write_en_wc       : std_logic; 
+signal      input_write_en_bubr     : std_logic; 
+signal      input_write_en_bc       : std_logic; 
+signal      input_write_en_xt       : std_logic; 
+signal      input_write_en_hprev    : std_logic;   
+signal      input_write_en_gru2_wu  : std_logic; 
+signal      input_write_en_gru2_wr  : std_logic; 
+signal      input_write_en_gru2_wc  : std_logic; 
+signal      input_write_en_gru2_bubr: std_logic; 
+signal      input_write_en_gru2_bc  : std_logic;  
+signal      input_write_en_gru2_hprev:  std_logic;      
+signal      input_write_en_fc_weights:  std_logic;
+signal      data_out                : std_logic_vector(15 downto 0);
 signal end_sim : std_logic:='0';
 begin
+------------------------------out to logic analyzer------------------------------
+clk_out <= clk;
 ----------------------------------------------------------------------------------
      addr_hprev <= "000"&addr_hprev_temp;   
      addr_input <= "00"&addr_input_temp;
@@ -469,6 +471,7 @@ begin
                   '0';
   r_u_valid_gru1<=r_u_valid when GRU_sel='0' else
                   '0';
+                  
 -----duts------------------------------------------------------------------
      dut_clock:clk_wiz_0
         port map(
@@ -490,7 +493,6 @@ begin
         hprev_state             => hprev_state          ,
         xt_state_gru2           => xt_state_gru2     ,
         hprev_state_gru2        => hprev_state_gru2  ,
-        data_in                 => data_in              ,
         ht_in                   => h_t                 ,
         addr_input_in           => addr_input           ,
         addr_w_u_in             => addr_w_u             ,
@@ -744,112 +746,6 @@ dut15: sigmoid_fc
         final_result    => final_result
           );
 
-result_valid_out <= result_valid;
---pad map---------------------------------------------------------------------------------
---  clkpad : CPAD_S_74x50u_IN
---    port map (
---      COREIO => clki,
---      PADIO  => clk
---      );
---  resetpad : CPAD_S_74x50u_IN
---    port map (
---      COREIO => reseti,
---      PADIO  => reset
---      );   
---   startpad : CPAD_S_74x50u_IN
---    port map (
---      COREIO => starti,
---      PADIO  => start
---      );
---   initialpad : CPAD_S_74x50u_IN
---    port map (
---      COREIO => initiali,
---      PADIO  => initial
---      );
---  InPads : for i in 0 to 15 generate
---    InPad : CPAD_S_74x50u_IN
---      port map (
---        COREIO => data_ini(i),
---        PADIO  => data_in(i)
---        );
---  end generate InPads;
---   OutPads : for i in 0 to 15 generate
---   OutPad : CPAD_S_74x50u_OUT
---      port map (
---        COREIO => data_outi(i),
---        PADIO  => data_out(i)
---        );
---  end generate OutPads;
---   enpad1 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_wui ,
---      PADIO  => input_write_en_wu 
---      );
---   enpad2 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO =>  input_write_en_wri,
---      PADIO  =>  input_write_en_wr
---      );
---   enpad3 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO =>  input_write_en_wci,
---      PADIO  =>  input_write_en_wc
---      );
---   enpad4 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_bubri ,
---      PADIO  => input_write_en_bubr
---      );
---   enpad5 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_bci,
---      PADIO  => input_write_en_bc
---      );
---   enpad6 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO =>  input_write_en_xti  ,
---      PADIO  =>  input_write_en_xt  
---      );
---   enpad7 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_hprevi ,
---      PADIO  => input_write_en_hprev 
---      );
---   enpad8 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_gru2_wui,
---      PADIO  => input_write_en_gru2_wu
---      );
---   enpad9 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_gru2_wri,
---      PADIO  => input_write_en_gru2_wr
---      );
---   enpad10 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_gru2_wci,
---      PADIO  => input_write_en_gru2_wc
---      );
---   enpad11 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO =>  input_write_en_gru2_bubri ,
---      PADIO  =>  input_write_en_gru2_bubr 
---      );
---   enpad12: CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_gru2_bci,
---      PADIO  => input_write_en_gru2_bc
---      );
---   enpad13 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_gru2_hprevi,
---      PADIO  => input_write_en_gru2_hprev
---      );
---   enpad14 : CPAD_S_74x50u_OUT
---    port map (
---      COREIO => input_write_en_fc_weightsi,
---      PADIO  => input_write_en_fc_weights
---      );
   
 
 end Behavioral;

@@ -63,8 +63,8 @@ set_property PACKAGE_PIN E3 [get_ports clk_in]
 
 ## LEDs
 ##Bank = 34, Pin name = IO_L24N_T3_34,						Sch name = LED0
-set_property PACKAGE_PIN T8 [get_ports {result_valid_out}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {result_valid_out}]
+set_property PACKAGE_PIN T8 [get_ports {final_result}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {final_result}]
 ##Bank = 34, Pin name = IO_L21N_T3_DQS_34,					Sch name = LED1
 #set_property PACKAGE_PIN V9 [get_ports {led[1]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {led[1]}]
@@ -210,11 +210,11 @@ set_property PACKAGE_PIN T16 [get_ports start]
 
 ##Pmod Header JA
 ##Bank = 15, Pin name = IO_L1N_T0_AD0N_15,					Sch name = JA1
-#set_property PACKAGE_PIN B13 [get_ports {JA[0]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JA[0]}]
+set_property PACKAGE_PIN B13 [get_ports {clk_out}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {clk_out}]
 ##Bank = 15, Pin name = IO_L5N_T0_AD9N_15,					Sch name = JA2
-#set_property PACKAGE_PIN F14 [get_ports {JA[1]}]					
-	#set_property IOSTANDARD LVCMOS33 [get_ports {JA[1]}]
+set_property PACKAGE_PIN F14 [get_ports {final_result]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {final_result]
 ##Bank = 15, Pin name = IO_L16N_T2_A27_15,					Sch name = JA3
 #set_property PACKAGE_PIN D17 [get_ports {JA[2]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JA[2]}]

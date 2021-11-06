@@ -21,22 +21,8 @@ port(
       reset                    : in std_logic;--top pad
       initial                  : in std_logic;--top pad
       start                    : in std_logic;--top pad
-      data_in                  : in std_logic_vector(15 downto 0);--top pad
-      input_write_en_wu        : out std_logic; --top pad
-      input_write_en_wr        : out std_logic; --top pad
-      input_write_en_wc        : out std_logic; --top pad
-      input_write_en_bubr      : out std_logic; --top pad
-      input_write_en_bc        : out std_logic; --top pad
-      input_write_en_xt        : out std_logic; --top pad
-      input_write_en_hprev     : out std_logic; --top pad    
-      input_write_en_gru2_wu   : out std_logic; --top pad
-      input_write_en_gru2_wr   : out std_logic; --top pad
-      input_write_en_gru2_wc   : out std_logic; --top pad
-      input_write_en_gru2_bubr : out std_logic; --top pad
-      input_write_en_gru2_bc   : out std_logic; --top pad   
-      input_write_en_gru2_hprev: out std_logic; --top pad     
-      input_write_en_fc_weights: out std_logic;--top pad 
-      data_out                : out std_logic_vector(15 downto 0)--top pad 
+      final_result         : out std_logic
+     -- data_out                : out std_logic_vector(15 downto 0)--top pad 
       );
 end component;
 
@@ -78,6 +64,7 @@ signal input_write_en_gru2_bubr: std_logic;
 signal input_write_en_gru2_bc  : std_logic;
 signal input_write_en_gru2_hprev : std_logic; 
 signal input_write_en_fc_weights : std_logic;
+signal result_valid_out         : std_logic;
 constant period1              : time := 5ns;
    
 begin
@@ -99,21 +86,7 @@ begin
         reset                    =>  reset                    ,
         initial                  =>  initial                  ,
         start                    =>  start                    ,
-        data_in                  =>  data_in                  ,
-        input_write_en_wu        =>  input_write_en_wu        ,
-        input_write_en_wr        =>  input_write_en_wr        ,
-        input_write_en_wc        =>  input_write_en_wc        ,
-        input_write_en_bubr      =>  input_write_en_bubr      ,
-        input_write_en_bc        =>  input_write_en_bc        ,
-        input_write_en_xt        =>  input_write_en_xt        ,
-        input_write_en_hprev     =>  input_write_en_hprev     ,
-        input_write_en_gru2_wu   =>  input_write_en_gru2_wu   ,
-        input_write_en_gru2_wr   =>  input_write_en_gru2_wr   ,
-        input_write_en_gru2_wc   =>  input_write_en_gru2_wc   ,
-        input_write_en_gru2_bubr =>  input_write_en_gru2_bubr ,
-        input_write_en_gru2_bc   =>  input_write_en_gru2_bc   , 
-        input_write_en_gru2_hprev=>  input_write_en_gru2_hprev,
-        input_write_en_fc_weights=>  input_write_en_fc_weights,
-        data_out                 =>  data_out
+        final_result         =>  result_valid_out
+        --data_out                 =>  data_out
             );
 end Behavioral;

@@ -23,31 +23,31 @@ end Mem9600x64_Wc;
 
 architecture rtl of Mem9600x64_Wc is
   
-component dist_mem_gen_2 is
+COMPONENT blk_mem_gen_2
   PORT (
-    a : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
-    d : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
-    clk : IN STD_LOGIC;
-    we : IN STD_LOGIC;
-    spo : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
+    clka : IN STD_LOGIC;
+    wea : IN STD_LOGIC_VECTOR(0 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(13 DOWNTO 0);
+    dina : IN STD_LOGIC_VECTOR(63 DOWNTO 0);
+    douta : OUT STD_LOGIC_VECTOR(63 DOWNTO 0)
   );
-end component;
+END COMPONENT;
 
   signal LOW  : std_logic;
   signal HIGH : std_logic;
   signal csn  : std_logic;
-  signal wen  : std_logic;
+  signal wen  : std_logic_vector(0 downto 0);
 
 begin
   csn <= not CSxSI;
-  wen <= not WExSI;
+  wen(0) <= not WExSI;
 
-    DUT_ST_SPHS_9600x64_mem2014 :dist_mem_gen_2
+    DUT_ST_SPHS_9600x64_mem2014 :blk_mem_gen_2
     port map(
-        a   => AddrxDI,
-        d   => DataxDI,
-        clk => ClkxCI,
-        we  => wen,
-        spo => DataxDO  
+        addra   => AddrxDI,
+        dina   => DataxDI,
+        clka => ClkxCI,
+        wea  => wen,
+        douta => DataxDO  
     );
 end rtl;

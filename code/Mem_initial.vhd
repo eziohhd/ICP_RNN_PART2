@@ -44,7 +44,7 @@ entity Mem_initial is
         hprev_state       : in std_logic;
         xt_state_gru2     : in std_logic;
         hprev_state_gru2  : in std_logic;
-        data_in           : in std_logic_vector(15 downto 0);--top pad
+        --data_in           : in std_logic_vector(15 downto 0);--top pad
         ht_in             : in std_logic_vector(15 downto 0);
         addr_input_in     : in std_logic_vector(6 downto 0);                  
         addr_w_u_in       : in std_logic_vector(12 downto 0);--13 bit:6144
@@ -435,12 +435,12 @@ wen_ht1_n(0) <= wen_ht1;
 wen_ht2_n(0) <= wen_ht2;
 wen_fc_n(0) <= wen_fc;            
 ---------------combinational_logic_out-------------------------------------------
-weight_u1_out_delay <= weight_u1;
-weight_u2_out_delay <= weight_u2;
-weight_r1_out_delay <= weight_r1;
-weight_r2_out_delay <= weight_r2;
-weight_c1_out_delay <= weight_c1;
-weight_c2_out_delay <= weight_c2;
+weight_u1_out <= weight_u1;
+weight_u2_out <= weight_u2;
+weight_r1_out <= weight_r1;
+weight_r2_out <= weight_r2;
+weight_c1_out <= weight_c1;
+weight_c2_out <= weight_c2;
 input1_out    <= xt1_delay(63 downto 32) when xt_state = '1' else
                  hprev1_delay(63 downto 32) when hprev_state = '1' else
                  ht1_delay(56 downto 48)&"0000000"&ht1_delay(40 downto 32)&"0000000" when xt_state_gru2 = '1' else
@@ -506,17 +506,17 @@ weight_c2 <= weight_c2_gru1 when loading = '1' and loading_gru2 = '0' else
              weight_c2_gru2;
                                         
 --------------------combinational_logic_gru1---------------------------------------------
-weight_u1_gru1 <= weight_1u(63 downto 32) when addr_w_u_in < 6145 else
+weight_u1_gru1 <= weight_1u(63 downto 32) when addr_w_u_in < 6146 else
              (others =>'0');
-weight_u2_gru1 <= weight_1u(31 downto 0) when addr_w_u_in < 6145 else
+weight_u2_gru1 <= weight_1u(31 downto 0) when addr_w_u_in < 6146 else
              (others =>'0');    
-weight_r1_gru1 <= weight_1r(63 downto 32) when addr_w_u_in < 6145 else
+weight_r1_gru1 <= weight_1r(63 downto 32) when addr_w_u_in < 6146 else
              (others =>'0');
-weight_r2_gru1 <= weight_1r(31 downto 0) when addr_w_u_in < 6145 else
+weight_r2_gru1 <= weight_1r(31 downto 0) when addr_w_u_in < 6146 else
              (others =>'0');
-weight_c1_gru1 <= weight_1c(63 downto 32) when addr_w_u_in < 6145 else
+weight_c1_gru1 <= weight_1c(63 downto 32) when addr_w_u_in < 6146 else
              (others =>'0');
-weight_c2_gru1 <= weight_1c(31 downto 0) when addr_w_u_in < 6145 else
+weight_c2_gru1 <= weight_1c(31 downto 0) when addr_w_u_in < 6146 else
              (others =>'0');       
 -----------------combinational_logic_gru2--------------------------------------------
 weight_u1_gru2 <= weight_gru2_1u(63 downto 32) when addr_w_u_in_gru2 < 4097 else
@@ -546,7 +546,7 @@ sequential:process(clk,reset)
         end if;
 end process;  
 mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_xt,counter_hprev,
-                    counter_change,counter_fc,start,data_in,addr_w_u_in,addr_w_u_in_gru2)
+                    counter_change,counter_fc,start,addr_w_u_in,addr_w_u_in_gru2)
     begin
         wen_wu <= '1';
         wen_wr <= '1';
@@ -597,7 +597,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 addr_weights_n <= addr_weights;   
                 if initial='1' then
                     next_state<=initial_wu;
-                    bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
+                    --bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
                     input_write_en_wu <= '1';
                 else
                     next_state<=idle;
@@ -607,7 +607,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 --wen_wu <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2);
-                bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
+                --bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
                 if counter_weights = 24576 then
                     counter_weights_next <= (others => '0');
                     addr_weights_n  <= (others => '0');
@@ -621,7 +621,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                -- wen_wr <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2); 
-                bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
+                --bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
                 if counter_weights = 24576 then 
                     input_write_en_wc <= '1';
                     counter_weights_next <= (others => '0');
@@ -635,11 +635,11 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                -- wen_wc <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2);  
-                bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
+               -- bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
                 if counter_weights = 24576 then               
                     next_state <= initial_bubr;
                     counter_bias_next <= (others => '0');
-                    bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
+                   -- bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                     input_write_en_bubr <= '1';
                 else 
                     next_state <= initial_wc;
@@ -647,7 +647,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
             when initial_bubr=>
                 input_write_en_bubr <= '1';
                -- wen_bubr <= '0';
-                bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
+                --bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                 counter_bias_next <= counter_bias + 1;
                 addr_bias_n <= counter_bias;
                 if addr_bias = 127 then
@@ -660,12 +660,12 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
             when initial_bc=>
                 input_write_en_bc <= '1';
                -- wen_bc <= '0';
-                bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
+                --bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                 counter_bias_next <= counter_bias + 1;
                 addr_bias_n <= counter_bias; 
                 if addr_bias = 127 then
                     next_state <= initial_xt1;
-                    bitstream_xt_next <= bitstream_xt(47 downto 0)&data_in;
+                    --bitstream_xt_next <= bitstream_xt(47 downto 0)&data_in;
                     input_write_en_xt <= '1';
                 else 
                     next_state <= initial_bc;
@@ -676,7 +676,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 addr_xt_n <= '0'&counter_xt(7 downto 3);
                 counter_xt_next <= counter_xt+1;
                 counter_change_next <= counter_xt; 
-                bitstream_xt_next <= bitstream_xt(47 downto 0)&data_in;
+               -- bitstream_xt_next <= bitstream_xt(47 downto 0)&data_in;
                 if counter_change(1 downto 0) = 3 then 
                     next_state <= initial_xt2;    
                 else
@@ -688,10 +688,10 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 addr_xt_n <= '0'&counter_xt(7 downto 3);
                 counter_xt_next <= counter_xt+1; 
                 counter_change_next <= counter_xt;  
-                bitstream_xt_next <= bitstream_xt(47 downto 0)&data_in;
+               -- bitstream_xt_next <= bitstream_xt(47 downto 0)&data_in;
                 if counter_change = 255 then
                     next_state <= initial_hprev1;
-                    bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in; 
+                    --bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in; 
                     input_write_en_hprev <= '1';
                 elsif counter_change(1 downto 0) = 3 then
                     next_state <= initial_xt1;  
@@ -705,7 +705,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 counter_hprev_next <= counter_hprev + 1; 
                 counter_change_next <= '0'&counter_hprev;
                 addr_hprev_n <= addr_hprev;
-                bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in;             
+                --bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in;             
                 if counter_change(1 downto 0)=3 then
                     next_state <= initial_hprev2;  
                 else
@@ -722,16 +722,16 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 counter_change_next <= '0'&counter_hprev;
                 if start = '0' then 
                     if counter_change = 127 then
-                        bitstream_hprev_next <= bitstream_hprev;
+                        --bitstream_hprev_next <= bitstream_hprev;
                         addr_hprev_n <= addr_hprev;
                         next_state <= initial_hprev2;                   
                     elsif counter_change(1 downto 0) = 3 then
-                        bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in;
+                       -- bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in;
                         next_state <= initial_hprev1;
                         addr_hprev_n <= addr_hprev + 1;
                     else
                         addr_hprev_n <=addr_hprev;
-                        bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in; 
+                       -- bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in; 
                         next_state <= initial_hprev2;  
                     end if; 
                 else
@@ -739,11 +739,11 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 end if;
             when load =>
                 loading <= '1';
-                if addr_w_u_in < 6144 then
+                if addr_w_u_in < 6145 then
                     next_state <= load;     
                 else
                     next_state <= initial_gru2_wu;   
-                    bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
+                   --bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
                     input_write_en_gru2_wu <= '1';
                 end if; 
             when initial_gru2_wu =>
@@ -751,7 +751,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 --wen_wu <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2);
-                bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
+                --bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
                 if counter_weights = 16384 then
                     counter_weights_next <= (others => '0');
                     addr_weights_n  <= (others => '0');
@@ -765,7 +765,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                -- wen_wr <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2); 
-                bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
+                --bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
                 if counter_weights = 16384 then 
                     input_write_en_gru2_wc <= '1';
                     counter_weights_next <= (others => '0');
@@ -779,11 +779,11 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 --wen_wc <= '0';
                 counter_weights_next <= counter_weights + 1;
                 addr_weights_n <= '0'&counter_weights(14 downto 2);  
-                bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
+                --bitstream_weights_next <= bitstream_weights(47 downto 0)&data_in;
                 if counter_weights = 16384 then               
                     next_state <= initial_gru2_bubr;
                     counter_bias_next <= (others => '0');
-                    bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
+                   -- bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                     input_write_en_gru2_bubr <= '1';
                 else 
                     next_state <= initial_gru2_wc;
@@ -791,7 +791,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
             when initial_gru2_bubr=>
                 input_write_en_gru2_bubr <= '1';
                 --wen_bubr <= '0';
-                bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
+               -- bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                 counter_bias_next <= counter_bias + 1;
                 addr_bias_n <= counter_bias;
                 if addr_bias = 127 then
@@ -804,12 +804,12 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
             when initial_gru2_bc=>
                 input_write_en_gru2_bc <= '1';
                 --wen_bc <= '0';
-                bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
+                --bitstream_bias_next <= data_in&bitstream_bias(15 downto 0);
                 counter_bias_next <= counter_bias + 1;
                 addr_bias_n <= counter_bias; 
                 if addr_bias = 127 then
                     next_state <= initial_gru2_hprev1;
-                    bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in; 
+                   -- bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in; 
                     input_write_en_gru2_hprev <= '1';
                 else 
                     next_state <= initial_gru2_bc;
@@ -820,7 +820,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 counter_hprev_next <= counter_hprev + 1; 
                 counter_change_next <= '0'&counter_hprev;
                 addr_hprev_n <= addr_hprev;
-                bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in;             
+               -- bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in;             
                 if counter_change(1 downto 0)=3 then
                     next_state <= initial_gru2_hprev2;  
                 else
@@ -841,18 +841,18 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                     input_write_en_fc_weights <= '1';
                     next_state <= initial_fc_weights;                   
                 elsif counter_change(1 downto 0) = 3 then
-                    bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in;
+                    --bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in;
                     next_state <= initial_gru2_hprev1;
                     addr_hprev_n <= addr_hprev + 1;
                 else
                     addr_hprev_n <=addr_hprev;
-                    bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in; 
+                    --bitstream_hprev_next <= bitstream_hprev(47 downto 0)&data_in; 
                     next_state <= initial_gru2_hprev2;  
                 end if; 
             when initial_fc_weights =>
                 input_write_en_fc_weights <= '1';
                 --wen_fc <= '0';
-                bitstream_fc_next <= bitstream_fc(15 downto 0)&data_in;
+                --bitstream_fc_next <= bitstream_fc(15 downto 0)&data_in;
                 counter_fc_next <= counter_fc + 1;
                 addr_fc_n <= '0'&counter_fc(6 downto 1); 
                 if addr_fc = 31 then
@@ -865,7 +865,7 @@ mem_controll:process(current_state,initial,counter_weights,counter_bias,counter_
                 next_state <= load_gru2;
             when load_gru2 =>
                 loading_gru2 <= '1';
-                if addr_w_u_in_gru2 < 4096 then
+                if addr_w_u_in_gru2 < 4097 then
                     next_state <= load_gru2;
                 else
                     next_state <= idle;
@@ -1037,38 +1037,38 @@ counter_fc_ff : FF
           clk => clk,
           reset => reset
           ); 
-bitstream_weights_ff : FF
-    generic map(N => 64)
-    port map(
-          D  => bitstream_weights_next,       
-          Q  => bitstream_weights,
-          clk => clk,
-          reset => reset
-          );
-bitstream_bias_ff : FF
-    generic map(N => 32)
-    port map(
-          D  => bitstream_bias_next,       
-          Q  => bitstream_bias,
-          clk => clk,
-          reset => reset
-          );
-bitstream_xt_ff : FF
-    generic map(N => 64)
-    port map(
-          D  => bitstream_xt_next,       
-          Q  => bitstream_xt,
-          clk => clk,
-          reset => reset
-          );
-bitstream_hprev_ff : FF
-    generic map(N => 64)
-    port map(
-          D  => bitstream_hprev_next,       
-          Q  => bitstream_hprev,
-          clk => clk,
-          reset => reset
-          );  
+--bitstream_weights_ff : FF
+--    generic map(N => 64)
+--    port map(
+--          D  => bitstream_weights_next,       
+--          Q  => bitstream_weights,
+--          clk => clk,
+--          reset => reset
+--          );
+--bitstream_bias_ff : FF
+--    generic map(N => 32)
+--    port map(
+--          D  => bitstream_bias_next,       
+--          Q  => bitstream_bias,
+--          clk => clk,
+--          reset => reset
+--          );
+--bitstream_xt_ff : FF
+--    generic map(N => 64)
+--    port map(
+--          D  => bitstream_xt_next,       
+--          Q  => bitstream_xt,
+--          clk => clk,
+--          reset => reset
+--          );
+--bitstream_hprev_ff : FF
+--    generic map(N => 64)
+--    port map(
+--          D  => bitstream_hprev_next,       
+--          Q  => bitstream_hprev,
+--          clk => clk,
+--          reset => reset
+--          );  
 bitstream_ht_ff : FF
     generic map(N => 64)
     port map(
@@ -1077,14 +1077,14 @@ bitstream_ht_ff : FF
           clk => clk,
           reset => reset
           );
-bitstream_fc_ff : FF
-    generic map(N => 32)
-    port map(
-          D  => bitstream_fc_next,       
-          Q  => bitstream_fc,
-          clk => clk,
-          reset => reset
-          );          
+--bitstream_fc_ff : FF
+--    generic map(N => 32)
+--    port map(
+--          D  => bitstream_fc_next,       
+--          Q  => bitstream_fc,
+--          clk => clk,
+--          reset => reset
+--          );          
 wen_ht1_ff : FF
     generic map(N => 1)
     port map(
@@ -1301,54 +1301,54 @@ port map(
     );
    
 ---------------------------delay ff-------------------------------------------
-weight_u1_out_delay_ff : FF
-    generic map(N => 32)
-    port map(
-          D  => weight_u1_out_delay,       
-          Q  => weight_u1_out,
-          clk => clk,
-          reset => reset
-          );
-weight_u2_out_delay_ff : FF
-    generic map(N => 32)
-    port map(
-          D  => weight_u2_out_delay,       
-          Q  => weight_u2_out,
-          clk => clk,
-          reset => reset
-          );
-weight_r1_out_delay_ff : FF
-    generic map(N => 32)
-    port map(
-          D  => weight_r1_out_delay,       
-          Q  => weight_r1_out,
-          clk => clk,
-          reset => reset
-          );  
-weight_r2_out_delay_ff : FF
-    generic map(N => 32)
-    port map(
-          D  => weight_r2_out_delay,       
-          Q  => weight_r2_out,
-          clk => clk,
-          reset => reset
-          );
-weight_c1_out_delay_ff : FF
-    generic map(N => 32)
-    port map(
-          D  => weight_c1_out_delay,       
-          Q  => weight_c1_out,
-          clk => clk,
-          reset => reset
-          );          
-weight_c2_out_delay_ff : FF
-    generic map(N => 32)
-    port map(
-          D  => weight_c2_out_delay,       
-          Q  => weight_c2_out,
-          clk => clk,
-          reset => reset
-          );  
+--weight_u1_out_delay_ff : FF
+--    generic map(N => 32)
+--    port map(
+--          D  => weight_u1_out_delay,       
+--          Q  => weight_u1_out,
+--          clk => clk,
+--          reset => reset
+--          );
+--weight_u2_out_delay_ff : FF
+--    generic map(N => 32)
+--    port map(
+--          D  => weight_u2_out_delay,       
+--          Q  => weight_u2_out,
+--          clk => clk,
+--          reset => reset
+--          );
+--weight_r1_out_delay_ff : FF
+--    generic map(N => 32)
+--    port map(
+--          D  => weight_r1_out_delay,       
+--          Q  => weight_r1_out,
+--          clk => clk,
+--          reset => reset
+--          );  
+--weight_r2_out_delay_ff : FF
+--    generic map(N => 32)
+--    port map(
+--          D  => weight_r2_out_delay,       
+--          Q  => weight_r2_out,
+--          clk => clk,
+--          reset => reset
+--          );
+--weight_c1_out_delay_ff : FF
+--    generic map(N => 32)
+--    port map(
+--          D  => weight_c1_out_delay,       
+--          Q  => weight_c1_out,
+--          clk => clk,
+--          reset => reset
+--          );          
+--weight_c2_out_delay_ff : FF
+--    generic map(N => 32)
+--    port map(
+--          D  => weight_c2_out_delay,       
+--          Q  => weight_c2_out,
+--          clk => clk,
+--          reset => reset
+--          );  
 
 xt1_delay_ff : FF
     generic map(N => 64)

@@ -121,6 +121,7 @@ process(current_state,start,input_done, h_prev_done,op_done,addr_input,addr_w_u,
 --                initial <= '1';
                 if start='1' then
                     next_state<=first_input;
+                    addr_w_u_next <= addr_w_u + 1;
                     xt_state_n <= "1";
                 else
                     next_state<=idle;
@@ -146,8 +147,10 @@ process(current_state,start,input_done, h_prev_done,op_done,addr_input,addr_w_u,
                 addr_w_u_next <= addr_w_u + 1;    
                 if input_done='1' then
                     next_state<=h_prev;
+                    addr_w_u_next <= addr_w_u + 1;
                 else 
                     next_state<=input;
+                    addr_w_u_next <= addr_w_u + 1;
                 end if;
              when h_prev=>
 --                mem_input_en <= '0'; 
@@ -163,9 +166,11 @@ process(current_state,start,input_done, h_prev_done,op_done,addr_input,addr_w_u,
                         next_state <= idle;
                     else
                         next_state <= first_input;
+                        addr_w_u_next <= addr_w_u + 1;
                     end if;
                 else
                     next_state<=h_prev;
+                    addr_w_u_next <= addr_w_u + 1;
                 end if;        
             end case;
 end process;
