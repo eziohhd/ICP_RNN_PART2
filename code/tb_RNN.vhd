@@ -70,14 +70,16 @@ constant period1              : time := 5ns;
 begin
 ----signals into chip-------------------------------------------------------------
      data_in <=  (others=>'0');
-     reset <= '1' ,
-               '0' after    4*period1;        
+     reset <= '0' ,
+               '1' after    400*period1*4,
+               '0' after    402*period1*4;       
      clk <= not (clk) after 1*period1;
-     initial <= '1',
-                '0' after 50*period1*5;
+     initial <= '0',
+                '1' after 500*period1*4,
+                '0' after 502*period1*4;
      start <= '0',
-               '1' after 200000*period1*5,
-               '0' after 200002*period1*5;
+               '1' after 200000*period1*4,
+               '0' after 200002*period1*4;
 
 -----duts------------------------------------------------------------------
    top: TOP_RNN
