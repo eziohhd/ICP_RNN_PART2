@@ -12,13 +12,13 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity TOP_RNN is
 port(
-      clk_in                  : in std_logic;--top pad
-      reset                   : in std_logic;--top pad
-      initial                 : in std_logic;--top pad
-      start                   : in std_logic;--top pad
+      clk_in               : in std_logic;--top pad
+      reset            : in std_logic;--top pad
+      initial_in           : in std_logic;--top pad
+      start_in             : in std_logic;--top pad
       final_result         : out std_logic;
-      clk_out              : out std_logic
-      --data_out                : out std_logic_vector(15 downto 0)--top pad 
+      clk_out              : out std_logic;
+      data_out             : out std_logic_vector(15 downto 0)--top pad 
       );
 end TOP_RNN;
 
@@ -36,6 +36,25 @@ architecture Behavioral of TOP_RNN is
 --      COREIO : in  std_logic;
 --      PADIO  : out std_logic);
 --  end component;
+component  debounce is
+  generic(
+    clk_freq    : INTEGER := 25_000_000;  --system clock frequency in Hz
+    stable_time : INTEGER := 10);         --time button must remain stable in ms
+  port(
+    clk     : IN  STD_LOGIC;  --input clock
+    reset : IN  STD_LOGIC;  --asynchronous active high reset
+    button  : IN  STD_LOGIC;  --input signal to be debounced
+    result  : OUT STD_LOGIC); --debounced signal
+end component;
+
+component edge_detector is
+    port (
+      clk : in std_logic;
+      reset : in std_logic;
+      button : in std_logic;
+      edge_found : out std_logic
+  );
+end component;
 
 component clk_wiz_0
 port
@@ -281,6 +300,7 @@ component sigmoid_fc is
         result_valid : in std_logic;
         fc_in       : in std_logic_vector(15 downto 0);
         result       : out std_logic_vector(15 downto 0);
+        fc_out       : out std_logic_vector(15 downto 0);
         final_result : out std_logic
           );
 end component;
@@ -291,6 +311,10 @@ constant MED_WL          :integer:=24;
 constant MED_FL          :integer:=13;
 constant FC_WL           :integer:=24;
 signal clk               : std_logic;
+signal initial           : std_logic;
+signal start             : std_logic;
+signal initial_temp      : std_logic;
+signal start_temp        : std_logic;
 signal locked            : std_logic;
 signal GRU_en            : std_logic;
 signal input_done_g        : std_logic;                   
@@ -390,6 +414,7 @@ signal fc_done                : std_logic;
 signal result_valid           : std_logic;
 signal fc                     : std_logic_vector(15 downto 0); 
 signal result                 : std_logic_vector(15 downto 0);
+signal result_out             : std_logic_vector(15 downto 0);
 signal h_prev                 : std_logic_vector(15 downto 0); 
 signal h_prev_gru1                 : std_logic_vector(15 downto 0);     
 signal h_prev_gru2                 : std_logic_vector(15 downto 0); 
@@ -405,26 +430,7 @@ signal start_ib                : std_logic;
 signal GRU_en_gru1            : std_logic;
 signal r_u_valid_gru1         : std_logic;  
 signal data_in                : std_logic_vector(15 downto 0);--top pad
-----signals for pads---------------------------------------------------------------------
---signal clki,reseti                   : std_logic;  
---signal starti                        : std_logic;  
---signal initiali                      : std_logic; 
---signal data_ini                      : std_logic_vector(15 downto 0);
---signal data_outi                     : std_logic_vector(15 downto 0);
---signal input_write_en_wui            : std_logic;  
---signal input_write_en_wri            : std_logic;  
---signal input_write_en_wci            : std_logic;  
---signal input_write_en_bubri          : std_logic;  
---signal input_write_en_bci            : std_logic;  
---signal input_write_en_xti            : std_logic;  
---signal input_write_en_hprevi         : std_logic;  
---signal input_write_en_gru2_wui       : std_logic;  
---signal input_write_en_gru2_wri       : std_logic;  
---signal input_write_en_gru2_wci       : std_logic;  
---signal input_write_en_gru2_bubri     : std_logic;  
---signal input_write_en_gru2_bci       : std_logic;  
---signal input_write_en_gru2_hprevi    : std_logic; 
---signal input_write_en_fc_weightsi    : std_logic;
+
 -------------------------useless signals------------------------------
 signal      input_write_en_wu       : std_logic; 
 signal      input_write_en_wr       : std_logic; 
@@ -440,7 +446,6 @@ signal      input_write_en_gru2_bubr: std_logic;
 signal      input_write_en_gru2_bc  : std_logic;  
 signal      input_write_en_gru2_hprev:  std_logic;      
 signal      input_write_en_fc_weights:  std_logic;
-signal      data_out                : std_logic_vector(15 downto 0);
 signal end_sim : std_logic:='0';
 begin
 ------------------------------out to logic analyzer------------------------------
@@ -473,6 +478,42 @@ clk_out <= clk;
                   '0';
                   
 -----duts------------------------------------------------------------------
+    initial_debounce:debounce
+    generic map(clk_freq =>25_000_000,stable_time => 1 )
+    port map(
+        clk => clk,
+        reset => reset,
+        button => initial_in,
+        result => initial_temp 
+    );
+    
+    start_debounce:debounce
+    generic map(clk_freq =>25_000_000,stable_time => 1 )
+    port map(
+        clk => clk,
+        reset => reset,
+        button => start_in,
+        result => start_temp 
+    );
+    
+    initial_detect:edge_detector
+    port map(
+        clk => clk,
+        reset => reset,
+        button => initial_temp,
+        edge_found => initial
+   
+    );
+    
+    start_detect:edge_detector
+    port map(
+        clk => clk,
+        reset => reset,
+        button => start_temp,
+        edge_found => start
+   
+    );
+    
      dut_clock:clk_wiz_0
         port map(
         
@@ -742,7 +783,8 @@ dut15: sigmoid_fc
         reset           => reset        ,
         result_valid    => result_valid ,
         fc_in           => fc        ,
-        result          =>   data_out ,
+        result          => result_out ,
+        fc_out          => data_out,
         final_result    => final_result
           );
 

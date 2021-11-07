@@ -17,11 +17,11 @@ architecture Behavioral of tb_RNN is
 --component------------------------------------------------------
 component TOP_RNN is
 port(
-      clk_in                      : in std_logic;--top pad
+      clk_in                   : in std_logic;--top pad
       reset                    : in std_logic;--top pad
-      initial                  : in std_logic;--top pad
-      start                    : in std_logic;--top pad
-      final_result         : out std_logic
+      initial_in               : in std_logic;--top pad
+      start_in                 : in std_logic;--top pad
+      final_result             : out std_logic
      -- data_out                : out std_logic_vector(15 downto 0)--top pad 
       );
 end component;
@@ -71,23 +71,27 @@ begin
 ----signals into chip-------------------------------------------------------------
      data_in <=  (others=>'0');
      reset <= '0' ,
-               '1' after    400*period1*4,
-               '0' after    402*period1*4;       
+               '1' after    200*period1*4,
+               '0' after    302*period1*4, 
+               '1' after    2000000*period1,
+               '0' after    2000010*period1;      
      clk <= not (clk) after 1*period1;
      initial <= '0',
-                '1' after 500*period1*4,
-                '0' after 502*period1*4;
+                '1' after 500*period1,
+                '0' after 202000*period1;
      start <= '0',
-               '1' after 200000*period1*4,
-               '0' after 200002*period1*4;
+               '1' after 800000*period1,
+               '0' after 1102000*period1;
+               
+          
 
 -----duts------------------------------------------------------------------
    top: TOP_RNN
    port map(
         clk_in                   =>  clk                      ,
         reset                    =>  reset                    ,
-        initial                  =>  initial                  ,
-        start                    =>  start                    ,
+        initial_in                  =>  initial                  ,
+        start_in                    =>  start                    ,
         final_result         =>  result_valid_out
         --data_out                 =>  data_out
             );
